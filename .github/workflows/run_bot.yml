@@ -1,0 +1,92 @@
+name: Clipify Free Bot
+
+on:
+  # GitHub Actions FREE kotasi (~2000 dk/ay kisiler icin) gozetilerek 6 saatte bir.
+  # Kisisel plan yetmiyorsa 12 saatte bire ("0 */12 * * *") cekin.
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: clipify-bot
+  cancel-in-progress: false
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+      CLIENT_SECRETS_JSON: ${{ secrets.CLIENT_SECRETS_JSON }}
+      CHANNELS_JSON: ${{ secrets.CHANNELS_JSON }}
+      AUTO_UPLOAD: "true"
+      IN_MEMORY: "true"
+      YOUTUBE_PRIVACY: "private"
+      WHISPER_MODEL: "tiny"
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Setup Node (yt-dlp JS runtime)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Restore whisper model cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/whisper
+          key: whisper-${{ env.WHISPER_MODEL }}
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Decode OAuth secrets
+        run: |
+          echo "${{ secrets.YOUTUBE_TOKEN_JSON }}" | base64 -d > token.json
+          echo "${{ secrets.CLIENT_SECRETS_JSON }}" | base64 -d > client_secrets.json
+          ls -la token.json client_secrets.json
+
+      - name: Run Clipify bot (one-shot)
+        run: |
+          python main.py --run-once || echo "Bot run done (exit non-zero)"
+
+      - name: Commit processed state back
+        run: |
+          git config user.name "clipify-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No state changes to commit"
+          else
+            git commit -m "bot: update processed/uploads state [skip ci]"
+            git push
+          fi
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clipify-logs
+          path: |
+            data/*.json
+            *.log
