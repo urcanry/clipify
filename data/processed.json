@@ -138,5 +138,33 @@
     "detected_at": "2026-09-11T12:13:47.180179",
     "status": "failed",
     "processed_at": "2026-09-11T12:13:48.988647"
+  },
+  "5nHPrtWzOU8": {
+    "title": "RRaenee | Ürkütücü İnternet Gizemleri | Tepki | @ilgincdimi",
+    "channel": "Craftest",
+    "detected_at": "2026-09-11T18:11:18.280011",
+    "status": "failed",
+    "processed_at": "2026-09-11T18:11:21.035382"
+  },
+  "3JmMaiFHW18": {
+    "title": "Ürkütücü İnternet Gİzemlerine Tepki! (@ilgincdimi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-11T18:11:18.504589",
+    "status": "failed",
+    "processed_at": "2026-09-11T18:11:22.312953"
+  },
+  "NUbVkJ6VzQ0": {
+    "title": "Komik Reddit Postlarına Tepki! #10 (r/GAGARAGOGOTAYFA) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-11T18:11:18.504608",
+    "status": "failed",
+    "processed_at": "2026-09-11T18:11:23.984159"
+  },
+  "wVdD8eGat1c": {
+    "title": "RRAENEE | REDDIT VIDEOLARI IZLIYOR! 11.09 (r/GAGARAGOGOTAYFA)",
+    "channel": "Zovek",
+    "detected_at": "2026-09-11T18:11:18.697897",
+    "status": "failed",
+    "processed_at": "2026-09-11T18:11:25.663133"
   }
 }
