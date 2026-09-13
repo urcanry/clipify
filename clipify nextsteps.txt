@@ -232,5 +232,38 @@ GUNCELLEME: 11 Eylül 2026
     (Telegram'da 'Yayinla' butonu) ya da YOUTUBE_PRIVACY=public ile otomatik.
 
 ================================================================================
+
+================================================================================
+ 11. GUNCELLEMELER (13 Eylul 2026)
+================================================================================
+  - /yukle komutu (Telegram) + GitHub Actions video_url input:
+        URL ile tek video yukleme artik iki yerden yapilabilir:
+        Telegram /yukle <link> ya da Actions + video_url (commit 2096a3e).
+  - RENDER FIX: ffmpeg 8.0.1 concat + pipe:0 girisi bozuk
+        (Nothing was written into output file). render.py video bytesini
+        gecici mp4 dosyasina yazip concat ile DOSYA girdisiyle calistirir.
+  - SESSIZ INTRO: YouTube Intro.mp4 SES ICERMIYOR (bilincli tercih).
+        probe_has_audio() ile algilanir, ses yoksa aevalsrc sessiz track
+        uretilir; matches no streams hatasi olusmaz.
+  - KANAL LOGOSU: logo.jpg videonun SAG UST kosesine overlay edilir
+        (110px, 16px bosluk, video boyunca). Dosya yoksa islem atlanir.
+        config: LOGO_FILE.
+  - GUVENLIK: TELEGRAM_BOT_TOKEN config.py den KALDIRILDI, .env den
+        okunur (.env gitignore da). Eski token BotFather dan revoke edildi,
+        yenisi alindi; Actions secret i yeni token la guncellenmeli.
+  - TELEGRAM 409: yalnizca TEK bot instance calismali. Ikinci poll
+        genellikle Actions ta takili kalan run dir; Actions sayfasindan
+        run i Cancel edin.
+  - YOUTUBE KALITE: yeni videolarda once 360p gorunur, 720p/1080p
+        isleme bitince kendiliginden gelir (dakika-saat). Taslak(private)
+        videolarda gecikebilir; public e almak hizlandirir. Yeniden
+        yukleme gerekmez.
+  - RENDER CIKTISI: moov umu tamamlanmis normal mp4 dosyasi uretilir
+        (frag-keyframe degil); cikti bytes olarak RAM de doner.
+
+================================================================================
+ SON
+================================================================================
+
  SON
 ================================================================================
