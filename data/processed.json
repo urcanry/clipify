@@ -235,5 +235,9 @@
     "detected_at": "2026-09-12T00:13:14.182667",
     "status": "failed",
     "processed_at": "2026-09-12T00:13:24.854026"
+  },
+  "": {
+    "status": "failed",
+    "processed_at": "2026-09-13T10:40:45.432114"
   }
 }
