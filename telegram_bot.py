@@ -124,6 +124,11 @@ def _run_upload_thread(fn, *args):
     threading.Thread(target=wrapper, daemon=True).start()
 
 
+def process_video(url):
+    from main import process_video as _pv
+    return _pv(url)
+
+
 async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -220,11 +225,35 @@ async def cancel_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Vazgecildi.")
 
 
+async def yukle_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    chat_id = update.effective_chat.id
+    if str(chat_id) != str(TELEGRAM_CHAT_ID):
+        await update.message.reply_text("\u26A0\ufe0f Yetkisiz kullanici.")
+        return
+
+    url = None
+    if context.args:
+        url = context.args[0]
+    elif update.message.reply_to_message and update.message.reply_to_message.text:
+        url = update.message.reply_to_message.text.strip()
+
+    if not url:
+        await update.message.reply_text(
+            "Kullanim: /yukle <youtube_url>\n"
+            "Ornek: /yukle https://www.youtube.com/watch?v=VIDEOID\n"
+            "(Bir mesaji yanitlayarak da gonderebilirsiniz)"
+        )
+        return
+
+    await update.message.reply_text("\U0001F4E4 Video yukleniyor, taslak:\n" + url)
+    _run_upload_thread(process_video, url)
+
+
 async def start_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "YouTube Automator Bot\n\n"
         "/status - Durum\n"
-        "/check - Yeni videolari kontrol et\n"
+        "/yukle <URL> - URL ile taslak yukle\n"
         "/iptal - Bekleyen islemi iptal et"
     )
 
@@ -240,6 +269,7 @@ def build_app():
     app = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start_cmd))
     app.add_handler(CommandHandler("status", status_cmd))
+    app.add_handler(CommandHandler("yukle", yukle_cmd))
     app.add_handler(CommandHandler("iptal", cancel_cmd))
     app.add_handler(CallbackQueryHandler(handle_callback))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))

@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: "0 */6 * * *"
   workflow_dispatch:
+    inputs:
+      video_url:
+        description: "URL ile tek video yukle (bos birakilirsa normal cron taramasi)"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -29,6 +34,7 @@ jobs:
       IN_MEMORY: "true"
       YOUTUBE_PRIVACY: "private"
       WHISPER_MODEL: "tiny"
+      VIDEO_URL: ${{ inputs.video_url }}
 
     steps:
       - name: Checkout repo
@@ -68,7 +74,11 @@ jobs:
 
       - name: Run Clipify bot (one-shot)
         run: |
-          python main.py --run-once || echo "Bot run done (exit non-zero)"
+          if [ -n "${VIDEO_URL}" ]; then
+            python main.py --url "${VIDEO_URL}" || echo "Upload run done (exit non-zero)"
+          else
+            python main.py --run-once || echo "Bot run done (exit non-zero)"
+          fi
 
       - name: Commit processed state back
         run: |
