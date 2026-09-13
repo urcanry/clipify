@@ -7,3 +7,4 @@ openai-whisper
 numpy
 requests
 isodate
+Pillow

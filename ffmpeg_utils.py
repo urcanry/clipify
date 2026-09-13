@@ -42,6 +42,24 @@ def probe_dimensions(input_bytes):
     return None, None
 
 
+def probe_duration_file(path):
+    cmd = [
+        "ffprobe", "-v", "error",
+        "-show_entries", "format=duration",
+        "-of", "csv=p=0",
+        path,
+    ]
+    try:
+        result = subprocess.run(cmd, capture_output=True, timeout=120)
+        if result.returncode == 0:
+            val = result.stdout.decode("utf-8", errors="replace").strip()
+            if val:
+                return float(val)
+    except Exception:
+        pass
+    return None
+
+
 def decode_audio_numpy(input_bytes, seconds=90):
     cmd = [
         "-i", "pipe:0",

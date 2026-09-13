@@ -4,7 +4,7 @@ import re
 
 from config import CONTACT_EMAIL, YOUTUBE_TAGS, INTRO_FILE
 
-CHANNEL_NAMES = ["rraenee", "raenee", "rr aenee", "elraenn", "craftest", "cfyt", "zovek", "2kan", "2kan"]
+CHANNEL_NAMES = ["rraenee", "raenee", "rr aenee", "elraenn", "craftest", "cfyt", "zovek", "2kan"]
 
 STOP_WORDS = {
     "izliyor", "izledi", "izliyorum", "tepki", "reaksiyon", "reaction", "reacts",
@@ -50,13 +50,31 @@ def _seed(video_id):
     return int(h[:8], 16)
 
 
+def _turkish_num_text(word):
+    return word
+
+
+def _capitalize_turkish(word):
+    if not word:
+        return word
+    first = word[0]
+    rest = word[1:]
+    if first == "i":
+        first = "İ"
+    elif first == "ı":
+        first = "I"
+    elif first.islower():
+        first = first.upper()
+    return first + rest
+
+
 def _clean_title(title):
-    t = (title or "").lower()
+    t = title or ""
     t = re.sub(r"#[^\s#]+", " ", t)
     t = re.sub(r"[^\wçğıöşüÇĞİÖŞÜ\s]", " ", t)
     for name in CHANNEL_NAMES:
-        t = re.sub(rf"\b{re.escape(name)}\b", " ", t)
-    words = [w for w in t.split() if w and w not in STOP_WORDS]
+        t = re.sub(rf"\b{re.escape(name)}\b", " ", t, flags=re.IGNORECASE)
+    words = [w for w in t.split() if w and w.lower() not in STOP_WORDS]
     return words
 
 
@@ -66,7 +84,7 @@ def generate_kw(video_id, title):
         words = ["Efsane"]
     limit = min(3, len(words))
     picked = words[:limit]
-    return " ".join(w.capitalize() for w in picked)
+    return " ".join(_capitalize_turkish(w) for w in picked)
 
 
 def generate_title(video_id, title, channel_name, intro_end):
@@ -92,9 +110,7 @@ def generate_description(video_id, title, channel_name, intro_end, original_url=
 
     tags_str = ", ".join(["#clipify", "#rraenee", *random.sample(YOUTUBE_TAGS, k=min(3, len(YOUTUBE_TAGS)))])
 
-    desc = (
-        base_hook + "\n\n"
-    )
+    desc = base_hook + "\n\n"
     for i, bullet in enumerate(body_bullets, 1):
         desc += f"{i}. {bullet}\n"
     desc += "\n"

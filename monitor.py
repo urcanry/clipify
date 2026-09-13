@@ -10,7 +10,8 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-from config import CHANNELS, PROCESSED_FILE
+from config import CHANNELS, PROCESSED_FILE, DUPLICATE_CHECK
+from fingerprint import compute_fingerprint, find_duplicate
 
 RSS_URL = "https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
 
@@ -90,16 +91,18 @@ def check_channel(channel_key):
         return []
 
     processed = load_processed()
-    first_run = PROCESSED_FILE not in os.listdir(os.path.dirname(PROCESSED_FILE) or ".") and not os.path.exists(PROCESSED_FILE)
+    first_run = not os.path.exists(PROCESSED_FILE) and not any(processed)
     new_videos = []
 
     if first_run:
         print(f"  Ilk kurulum: {len(videos[:5])} mevcut video islenmis sayilacak")
         for video in videos[:5]:
+            fp = compute_fingerprint(video["title"], 0)
             processed[video["video_id"]] = {
                 "title": video["title"],
                 "channel": channel_info["name"],
                 "detected_at": datetime.now().isoformat(),
+                "fingerprint": fp,
                 "skipped_initial": True,
             }
         save_processed(processed)
@@ -107,8 +110,26 @@ def check_channel(channel_key):
 
     for video in videos[:5]:
         vid = video["video_id"]
+
         if vid in processed:
             continue
+
+        if DUPLICATE_CHECK:
+            title_fp = compute_fingerprint(video["title"], 0)
+            dup_vid = find_duplicate(title_fp, processed)
+            if dup_vid:
+                dup_title = processed[dup_vid].get("title", "?")
+                print(f"  MUKERRER: {video['title'][:40]}...")
+                print(f"    Ayni icerik daha once yuklendi: [{dup_vid}] {dup_title[:40]}")
+                processed[vid] = {
+                    "title": video["title"],
+                    "channel": channel_info["name"],
+                    "detected_at": datetime.now().isoformat(),
+                    "fingerprint": title_fp,
+                    "status": "duplicate_skipped",
+                    "duplicate_of": dup_vid,
+                }
+                continue
 
         print(f"  [YENI!] {video['title'][:60]}...")
         new_videos.append({
@@ -117,10 +138,12 @@ def check_channel(channel_key):
             "video": video,
         })
 
+        fp = compute_fingerprint(video["title"], 0)
         processed[vid] = {
             "title": video["title"],
             "channel": channel_info["name"],
             "detected_at": datetime.now().isoformat(),
+            "fingerprint": fp,
         }
 
     save_processed(processed)

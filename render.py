@@ -45,7 +45,7 @@ def render_final(video_bytes, intro_end, fallback_size=(1920, 1080)):
                 f"aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[ao]"
             ),
             "-map", "[vo]", "-map", "[ao]",
-            "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+"-c:v", "libx264", "-preset", "ultrafast", "-crf", "23",
             "-c:a", "aac", "-b:a", "192k",
             "-movflags", "+empty_moov+frag_keyframe",
             "-f", "mp4", "pipe:1",
@@ -66,7 +66,7 @@ def render_final(video_bytes, intro_end, fallback_size=(1920, 1080)):
                 f"[iv][ia][cv][ca]concat=n=2:v=1:a=1[vo][ao]"
             ),
             "-map", "[vo]", "-map", "[ao]",
-            "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+"-c:v", "libx264", "-preset", "ultrafast", "-crf", "23",
             "-c:a", "aac", "-b:a", "192k",
             "-movflags", "+empty_moov+frag_keyframe",
             "-f", "mp4", "pipe:1",
@@ -106,4 +106,28 @@ def generate_preview(video_bytes, max_duration=60, max_width=1280):
     if out:
         size_mb = len(out) / (1024 * 1024)
         print(f"  Preview: {size_mb:.1f} MB ({max_duration}s)")
+    return out
+
+
+def generate_gif(video_bytes, start, duration, max_width=480, fps=10):
+    height = int(max_width * 9 / 16) // 2 * 2
+    args = [
+        "-i", "pipe:0",
+        "-ss", str(max(0, start)),
+        "-t", str(duration),
+        "-vf",
+        f"fps={fps},scale={max_width}:{height}:force_original_aspect_ratio=decrease,"
+        f"pad={max_width}:{height}:(ow-iw)/2:(oh-ih)/2:color=black",
+        "-loop", "0",
+        "-c:v", "gif",
+        "-f", "gif", "pipe:1",
+    ]
+    try:
+        out = run_ffmpeg_pipe(args, input_bytes=video_bytes, timeout=15 * 60)
+    except RuntimeError as e:
+        print(f"  UYARI: GIF olusturulamadi ({start}s): {e}")
+        return None
+    if out:
+        size_kb = len(out) / 1024
+        print(f"  GIF ({start:.0f}s): {size_kb:.0f} KB")
     return out

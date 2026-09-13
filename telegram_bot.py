@@ -1,15 +1,17 @@
 import io
-import os
 import json
-import threading
+import os
 import logging
+import threading
 
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, InputFile
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     Application,
     CommandHandler,
     CallbackQueryHandler,
+    MessageHandler,
     ContextTypes,
+    filters,
 )
 
 from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, DATA_DIR
@@ -22,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 PENDING_FILE = os.path.join(DATA_DIR, "pending_clips.json")
 pending_clips = {}
+pending_actions = {}
 
 
 def load_pending():
@@ -38,180 +41,87 @@ def save_pending():
         json.dump(pending_clips, f, indent=2, ensure_ascii=False)
 
 
+async def send_uploaded_message(clip_info, first_gif=None, last_gif=None, original_description=""):
+    from telegram import Bot
+
+    bot = Bot(token=TELEGRAM_BOT_TOKEN)
+    original_title = clip_info.get("original_title", "")
+    channel = clip_info.get("channel", "")
+    url = clip_info.get("youtube_url", "")
+    privacy = clip_info.get("privacy", "private")
+    video_id = clip_info.get("youtube_video_id", "")
+
+    desc_trunc = (original_description or "").strip().replace("\n", " ")[:220]
+
+    caption = (
+        f"\U0001F4FA YUKLENDI ({privacy})\n"
+        f"\U0001F517 {url}\n\n"
+        f"\U0001F3AC Başlık: {original_title}\n"
+        f"\U0001F4E1 Kanal: {channel}\n"
+    )
+    if desc_trunc:
+        caption += f"\n\U0001F4DD Orijinal Açıklama: {desc_trunc}..."
+
+    keyboard = [[
+        InlineKeyboardButton("\u270F\ufe0f Başlığı Değiştir", callback_data=f"rename:{video_id}"),
+        InlineKeyboardButton("\U0001F5BC\ufe0f Kapağı Güncelle", callback_data=f"thumb:{video_id}"),
+        InlineKeyboardButton("\U0001F680 Yayınla", callback_data=f"publish:{video_id}"),
+    ]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    if len(caption) > 1024:
+        caption = caption[:1021] + "..."
+
+    await bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=caption, reply_markup=reply_markup)
+
+    if first_gif:
+        try:
+            await bot.send_animation(
+                chat_id=TELEGRAM_CHAT_ID,
+                animation=io.BytesIO(first_gif),
+                caption="\u23F1\ufe0f Ilk 10 saniye",
+            )
+        except Exception as e:
+            logger.error(f"Ilk GIF gonderilemedi: {e}")
+    if last_gif:
+        try:
+            await bot.send_animation(
+                chat_id=TELEGRAM_CHAT_ID,
+                animation=io.BytesIO(last_gif),
+                caption="\u23F1\ufe0f Son 10 saniye",
+            )
+        except Exception as e:
+            logger.error(f"Son GIF gonderilemedi: {e}")
+
+    return True
+
+
 async def notify_new_video(channel_name, title, url, thumbnail_url=None):
     from telegram import Bot
-    bot = Bot(token=TELEGRAM_BOT_TOKEN)
 
+    bot = Bot(token=TELEGRAM_BOT_TOKEN)
     text = (
         f"Yeni Video!\n"
         f"Kanal: {channel_name}\n"
         f"Baslik: {title}\n"
         f"Link: {url}"
     )
-
-    keyboard = [[
-        InlineKeyboardButton("Isle", callback_data=f"process:{url}"),
-        InlineKeyboardButton("Atla", callback_data=f"skip:{url}"),
-    ]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
     if thumbnail_url:
         try:
-            await bot.send_photo(
-                chat_id=TELEGRAM_CHAT_ID,
-                photo=thumbnail_url,
-                caption=text,
-                reply_markup=reply_markup,
-            )
+            await bot.send_photo(chat_id=TELEGRAM_CHAT_ID, photo=thumbnail_url, caption=text)
             return
         except Exception:
             pass
-
-    await bot.send_message(
-        chat_id=TELEGRAM_CHAT_ID,
-        text=text,
-        reply_markup=reply_markup,
-    )
-
-
-async def send_preview(clip_id, video_bytes, clip_info):
-    from telegram import Bot
-    bot = Bot(token=TELEGRAM_BOT_TOKEN)
-
-    title = clip_info.get("title", "Video")
-    channel = clip_info.get("channel", "")
-    intro_end = clip_info.get("intro_end", 0)
-    original_url = clip_info.get("original_url", "")
-
-    caption = (
-        f"ONAY BEKLIYOR\n\n"
-        f"Baslik: {title}\n"
-        f"Kanal: {channel}\n"
-        f"Intro kesildi: {intro_end:.0f}s\n"
-        f"Orijinal: {original_url}"
-    )
-
-    keyboard = [[
-        InlineKeyboardButton("Onayla - Taslak Yukle", callback_data=f"approve:{clip_id}"),
-        InlineKeyboardButton("Reddet - Sil", callback_data=f"reject:{clip_id}"),
-    ]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
-    try:
-        size_mb = len(video_bytes) / (1024 * 1024)
-        if size_mb > 50:
-            await bot.send_message(
-                chat_id=TELEGRAM_CHAT_ID,
-                text=f"{caption}\n\nDosya boyutu: {size_mb:.1f} MB (50MB limiti astigindan video gonderilemedi)",
-                reply_markup=reply_markup,
-            )
-            return
-
-        video_file = InputFile(io.BytesIO(video_bytes), filename="preview.mp4")
-        await bot.send_video(
-            chat_id=TELEGRAM_CHAT_ID,
-            video=video_file,
-            caption=caption,
-            reply_markup=reply_markup,
-            supports_streaming=True,
-        )
-    except Exception as e:
-        logger.error(f"Preview gonderilemedi: {e}")
-        await bot.send_message(
-            chat_id=TELEGRAM_CHAT_ID,
-            text=f"{caption}\n\nPreview gonderilemedi: {e}",
-            reply_markup=reply_markup,
-        )
-
-
-async def send_uploaded_message(clip_info):
-    from telegram import Bot
-    bot = Bot(token=TELEGRAM_BOT_TOKEN)
-
-    title = clip_info.get("title", "")
-    channel = clip_info.get("channel", "")
-    url = clip_info.get("youtube_url", "")
-    privacy = clip_info.get("privacy", "taslak/private")
-
-    text = (
-        f"TASLAK OLARAK YUKLENDI\n\n"
-        f"Baslik: {title}\n"
-        f"Kanal: {channel}\n"
-        f"Gizlilik: {privacy}\n"
-        f"Link: {url}\n\n"
-        f"Yayinlamak icin YouTube Studio'yu kontrol et."
-    )
     await bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=text)
 
 
-def handle_approve_sync(clip_id):
-    if clip_id in pending_clips:
-        pending_clips[clip_id]["status"] = "approved"
-        save_pending()
-        return pending_clips[clip_id]
-    return None
-
-
-def handle_reject_sync(clip_id):
-    if clip_id in pending_clips:
-        pending_clips[clip_id]["status"] = "rejected"
-        save_pending()
-        clip_path = pending_clips[clip_id].get("video_path")
-        if clip_path and os.path.exists(clip_path):
-            os.remove(clip_path)
-        return pending_clips[clip_id]
-    return None
-
-
-def _upload_approved(clip_id):
-    from uploader import upload_clip
-    from telegram import Bot
-
-    bot = Bot(token=TELEGRAM_BOT_TOKEN)
-    clip = pending_clips.get(clip_id)
-    if not clip:
-        _send_result(bot, clip_id, None, "Clip bulunamadi")
-        return
-
-    video_path = clip.get("video_path")
-    if not video_path or not os.path.exists(video_path):
-        _send_result(bot, clip_id, None, "Video dosyasi bulunamadi")
-        return
-
-    with open(video_path, "rb") as f:
-        mp4_bytes = f.read()
-
-    thumbnail_path = clip.get("thumbnail_path")
-    thumbnail_bytes = None
-    if thumbnail_path and os.path.exists(thumbnail_path):
-        with open(thumbnail_path, "rb") as t:
-            thumbnail_bytes = t.read()
-
-    video_id, url = upload_clip(
-        mp4_bytes=mp4_bytes,
-        info=clip,
-        thumbnail_bytes=thumbnail_bytes,
-    )
-
-    if video_id:
-        clip["status"] = "uploaded"
-        clip["youtube_url"] = url
-        save_pending()
-        result_msg = f"TASLAK YUKLENDI\n{url}"
-    else:
-        result_msg = "Yukleme basarisiz. Konsol ciktisini kontrol edin."
-    _send_result(bot, clip_id, video_id, result_msg)
-
-
-def _send_result(bot, clip_id, video_id, message):
-    try:
-        import asyncio
-        asyncio.run(bot.send_message(
-            chat_id=TELEGRAM_CHAT_ID,
-            text=f"Clip: {clip_id}\n{message}",
-        ))
-    except Exception as e:
-        logger.error(f"Yukleme sonucu gonderilemedi: {e}")
+def _run_upload_thread(fn, *args):
+    def wrapper():
+        try:
+            fn(*args)
+        except Exception as e:
+            logger.error(f"Arka plan islemi basarisiz: {e}")
+    threading.Thread(target=wrapper, daemon=True).start()
 
 
 async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -219,70 +129,110 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     data = query.data
-    parts = data.split(":", 1)
-    if len(parts) != 2:
+    if ":" not in data:
+        return
+    action, video_id = data.split(":", 1)
+    chat_id = query.message.chat_id
+
+    if action == "rename":
+        pending_actions[chat_id] = {"action": "rename", "video_id": video_id}
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=f"Yeni başlığı yazın (video: {video_id}):\n"
+                 f"/iptal ile vazgecebilirsiniz.",
+        )
+
+    elif action == "thumb":
+        pending_actions[chat_id] = {"action": "thumb", "video_id": video_id}
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=f"Yeni kapak fotografini (resim) gonderin (video: {video_id}):\n"
+                 f"/iptal ile vazgecebilirsiniz.",
+        )
+
+    elif action == "publish":
+        from uploader import publish_video
+
+        await context.bot.send_message(chat_id=chat_id, text="\U0001F680 Video yayinlaniyor...")
+        _run_upload_thread(publish_video, video_id)
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=f"\u2705 Video yayinda: https://www.youtube.com/watch?v={video_id}",
+        )
+
+
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    chat_id = update.effective_chat.id
+    state = pending_actions.get(chat_id)
+    if not state:
         return
 
-    action, clip_id = parts
+    video_id = state["video_id"]
+    action = state["action"]
 
-    if action == "approve":
-        result = handle_approve_sync(clip_id)
-        if result:
-            await query.edit_message_caption(
-                caption=f"ONAYLANDI\n\n{query.message.caption or ''}",
+    if action == "rename" and update.message.text:
+        new_title = update.message.text.strip()
+        if not new_title:
+            return
+        del pending_actions[chat_id]
+        from uploader import update_video_title
+
+        ok = update_video_title(video_id, new_title)
+        if ok:
+            await update.message.reply_text(
+                f"\u2705 Başlık güncellendi: {new_title[:80]}"
             )
-            await query.edit_message_reply_markup(reply_markup=None)
             await context.bot.send_message(
-                chat_id=query.message.chat_id,
-                text="Video onaylandi! YouTube'a taslak olarak yukleniyor...",
+                chat_id=chat_id,
+                text=f"\U0001F517 https://www.youtube.com/watch?v={video_id}",
             )
-            threading.Thread(
-                target=_upload_approved,
-                args=(clip_id,),
-                daemon=True,
-            ).start()
         else:
-            await query.edit_message_caption(
-                caption=f"Bulunamadi\n\n{query.message.caption or ''}",
+            await update.message.reply_text("\u26A0\ufe0f Başlık güncellenemedi. Konsola bakın.")
+
+    elif action == "thumb" and update.message.photo:
+        del pending_actions[chat_id]
+        file_id = update.message.photo[-1].file_id
+        try:
+            tg_file = await context.bot.get_file(file_id)
+            thumb_bytes = await tg_file.download_as_bytearray()
+        except Exception as e:
+            await update.message.reply_text(f"\u26A0\ufe0f Fotoğraf okunamadi: {e}")
+            return
+
+        from uploader import set_thumbnail
+
+        ok = set_thumbnail(video_id, bytes(thumb_bytes))
+        if ok:
+            await update.message.reply_text(
+                f"\u2705 Kapak guncellendi: https://www.youtube.com/watch?v={video_id}"
             )
+        else:
+            await update.message.reply_text("\u26A0\ufe0f Kapak guncellenemedi. Konsola bakın.")
 
-    elif action == "reject":
-        handle_reject_sync(clip_id)
-        await query.edit_message_caption(
-            caption=f"REDDEDILDI\n\n{query.message.caption or ''}",
-        )
-        await query.edit_message_reply_markup(reply_markup=None)
+    elif update.message.text and update.message.text.strip().lower() == "/iptal":
+        del pending_actions[chat_id]
+        await update.message.reply_text("Vazgecildi.")
 
-    elif action == "process":
-        await query.edit_message_reply_markup(reply_markup=None)
-        await context.bot.send_message(
-            chat_id=query.message.chat_id,
-            text="Video isleniyor (monitor modunda otomatik).",
-        )
 
-    elif action == "skip":
-        await query.edit_message_reply_markup(reply_markup=None)
-        await context.bot.send_message(
-            chat_id=query.message.chat_id,
-            text="Atlandi.",
-        )
+async def cancel_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    chat_id = update.effective_chat.id
+    pending_actions.pop(chat_id, None)
+    await update.message.reply_text("Vazgecildi.")
 
 
 async def start_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "YouTube Automator Bot\n\n"
-        "/status - Bekleyen klipleri listele\n"
-        "/check - Yeni videolari kontrol et"
+        "/status - Durum\n"
+        "/check - Yeni videolari kontrol et\n"
+        "/iptal - Bekleyen islemi iptal et"
     )
 
 
 async def status_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     load_pending()
     pending = [k for k, v in pending_clips.items() if v.get("status") == "pending"]
-    approved = [k for k, v in pending_clips.items() if v.get("status") == "approved"]
-    await update.message.reply_text(
-        f"Bekleyen: {len(pending)}\nOnaylanan: {len(approved)}"
-    )
+    await update.message.reply_text(f"Bekleyen clip: {len(pending)}")
 
 
 def build_app():
@@ -290,5 +240,8 @@ def build_app():
     app = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start_cmd))
     app.add_handler(CommandHandler("status", status_cmd))
+    app.add_handler(CommandHandler("iptal", cancel_cmd))
     app.add_handler(CallbackQueryHandler(handle_callback))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    app.add_handler(MessageHandler(filters.PHOTO, handle_message))
     return app

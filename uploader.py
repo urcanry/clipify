@@ -16,7 +16,7 @@ from config import (
     YOUTUBE_TAGS,
     UPLOADS_FILE,
 )
-from title_generator import generate_title, generate_description, generate_tags
+from title_generator import generate_description, generate_tags
 
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 TOKEN_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "token.json")
@@ -72,6 +72,50 @@ def set_thumbnail(video_id, thumbnail_bytes):
     except HttpError as e:
         print(f"  UYARI: Thumbnail eklenemedi: {e}")
         return False
+
+
+def update_video_title(video_id, new_title):
+    youtube = get_youtube_service()
+    try:
+        current = youtube.videos().list(part="snippet", id=video_id).execute()
+        if not current.get("items"):
+            print(f"  HATA: Video bulunamadi: {video_id}")
+            return False
+        snippet = current["items"][0]["snippet"]
+        snippet["title"] = new_title[:100]
+        youtube.videos().update(
+            part="snippet",
+            body={"id": video_id, "snippet": snippet},
+        ).execute()
+        print(f"  Baslik guncellendi: {new_title[:50]}...")
+        return True
+    except HttpError as e:
+        print(f"  UYARI: Baslik guncellenemedi: {e}")
+        return False
+
+
+def set_privacy(video_id, privacy):
+    youtube = get_youtube_service()
+    try:
+        current = youtube.videos().list(part="status", id=video_id).execute()
+        if not current.get("items"):
+            print(f"  HATA: Video bulunamadi: {video_id}")
+            return False
+        status = current["items"][0]["status"]
+        status["privacyStatus"] = privacy
+        youtube.videos().update(
+            part="status",
+            body={"id": video_id, "status": status},
+        ).execute()
+        print(f"  Gizlilik guncellendi: {privacy}")
+        return True
+    except HttpError as e:
+        print(f"  UYARI: Gizlilik guncellenemedi: {e}")
+        return False
+
+
+def publish_video(video_id):
+    return set_privacy(video_id, "public")
 
 
 def upload_video(mp4_bytes, title, description, tags=None, thumbnail_bytes=None,
@@ -136,14 +180,14 @@ def upload_clip(mp4_bytes, info, thumbnail_bytes=None, tags=None):
     channel_name = info.get("channel", "")
     intro_end = info.get("intro_end", 0)
 
-    title = generate_title(video_id, original_title, channel_name, intro_end)
+    title = original_title
     description = generate_description(
         video_id, original_title, channel_name, intro_end, original_url
     )
     if tags is None:
         tags = generate_tags(original_title, channel_name)
 
-    print(f"\n  Uretilen baslik: {title}")
+    print(f"\n  Yuklenen baslik (orijinal): {title}")
 
     vid, url = upload_video(
         mp4_bytes=mp4_bytes,

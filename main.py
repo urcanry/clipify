@@ -19,26 +19,25 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 from config import (
-    CHANNELS, OUTPUT_DIR, THUMBNAIL_DIR, INTRO_FILE,
+    CHANNELS, OUTPUT_DIR, KAPAK_DIR, INTRO_FILE,
     MONITOR_INTERVAL, MIN_VIDEO_DURATION, MAX_VIDEO_DURATION,
-    AUTO_UPLOAD, YOUTUBE_PRIVACY,
+    AUTO_UPLOAD, YOUTUBE_PRIVACY, DUPLICATE_CHECK,
 )
 
 from monitor import check_all_channels, load_processed, save_processed
+from fingerprint import compute_fingerprint, find_duplicate
 from downloader import download_to_memory, get_video_info
 from intro_detector import detect_intro_end
-from render import render_final, generate_preview
-from thumbnail import download_thumbnail_bytes
-from telegram_bot import (
-    notify_new_video, send_preview, send_uploaded_message,
-    load_pending, save_pending, handle_approve_sync,
-)
+from render import render_final, generate_gif
+from ffmpeg_utils import probe_duration_file
+from thumbnail import download_original_thumbnail
+from telegram_bot import notify_new_video, send_uploaded_message
 from uploader import upload_clip
 
 
 def setup_dirs():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    os.makedirs(THUMBNAIL_DIR, exist_ok=True)
+    os.makedirs(KAPAK_DIR, exist_ok=True)
 
 
 def is_long_video(info):
@@ -73,6 +72,21 @@ def process_video(url, channel_name="Bilinmeyen"):
     print(f"  Baslik: {title}")
     print(f"  Sure: {duration // 60}:{duration % 60:02d}")
 
+    if DUPLICATE_CHECK:
+        full_fp = compute_fingerprint(title, duration)
+        existing = load_processed()
+        dup_vid = find_duplicate(full_fp, existing)
+        if dup_vid and dup_vid != video_id:
+            dup_title = existing[dup_vid].get("title", "?")
+            print(f"  MUKERRER VIDEO: Ayni icerik daha once yuklendi")
+            print(f"    Onceki: [{dup_vid}] {dup_title[:50]}")
+            print(f"    Fingerprint: {full_fp}")
+            return {"skipped": "duplicate", "video_id": video_id, "title": title,
+                    "duplicate_of": dup_vid, "fingerprint": full_fp}
+        existing[video_id] = existing.get(video_id, {})
+        existing[video_id]["fingerprint"] = full_fp
+        save_processed(existing)
+
     if not is_long_video(info):
         return {"skipped": "short_or_long", "video_id": video_id, "title": title}
 
@@ -81,17 +95,17 @@ def process_video(url, channel_name="Bilinmeyen"):
         print(f"Aranan yol: {INTRO_FILE}")
         return None
 
-    print(f"\n[1/5] Video RAM'e indiriliyor (disk kullanilmadan)...")
+    print(f"\n[1/4] Video RAM'e indiriliyor (disk kullanilmadan)...")
     video_stream = download_to_memory(url)
     if video_stream is None:
         return None
     video_bytes = video_stream.getvalue()
 
-    print(f"\n[2/5] Intro tespiti yapiliyor...")
+    print(f"\n[2/4] Intro tespiti yapiliyor...")
     intro_end = detect_intro_end(video_id, video_bytes, duration)
     print(f"  Intro bitis: {intro_end:.1f}s")
 
-    print(f"\n[3/5] Intro birlesitirilip video isleniyor (RAM)...")
+    print(f"\n[3/4] Intro birlesitirilip video isleniyor (RAM)...")
     final_bytes = render_final(
         video_bytes,
         intro_end,
@@ -103,67 +117,57 @@ def process_video(url, channel_name="Bilinmeyen"):
     del video_bytes
     del video_stream
 
-    print(f"\n[4/5] Thumbnail RAM'e indiriliyor...")
-    thumbnail_bytes = download_thumbnail_bytes(video_id)
+    print(f"\n[4/5] Orijinal kapak indirilip 'Kapaklar' klasorune kaydediliyor...")
+    thumbnail_path = download_original_thumbnail(video_id, title)
 
     clip_info = {
         "video_id": video_id,
         "title": title,
+        "original_title": title,
         "channel": channel_name,
         "original_url": url,
         "intro_end": intro_end,
         "description": description,
-        "status": "pending",
+        "thumbnail_path": thumbnail_path,
+        "status": "uploading",
     }
 
-    if AUTO_UPLOAD:
-        print(f"\n[5/5] YouTube'a yukleniyor (AUTO_UPLOAD acik, taslak: {YOUTUBE_PRIVACY})...")
-        vid, youtube_url = upload_clip(
-            mp4_bytes=final_bytes,
-            info=clip_info,
-            thumbnail_bytes=thumbnail_bytes,
-        )
-        if vid:
-            clip_info["status"] = "uploaded"
-            clip_info["youtube_url"] = youtube_url
-            print(f"\n{'='*60}")
-            print(f"YUKLENDI (taslak): {youtube_url}")
-            print(f"{'='*60}")
-            asyncio.run(send_uploaded_message(clip_info))
-            return clip_info
-        print("Yukleme basarisiz")
-        return None
+    print(f"\n[5/5] YouTube'a yukleniyor (otonom, taslak: {YOUTUBE_PRIVACY})...")
+    print(f"  Baslik (orijinal): {title}")
+    vid, youtube_url = upload_clip(
+        mp4_bytes=final_bytes,
+        info=clip_info,
+    )
+    if vid:
+        clip_info["status"] = "uploaded"
+        clip_info["youtube_url"] = youtube_url
+        clip_info["youtube_video_id"] = vid
+        clip_info["privacy"] = YOUTUBE_PRIVACY
 
-    print(f"\n[5/5] Onay icin kaydediliyor ve Telegram'a gonderiliyor...")
-    clip_id = f"{video_id}_{int(time.time())}"
-    video_path = os.path.join(OUTPUT_DIR, f"{video_id}_final.mp4")
-    thumb_path = os.path.join(THUMBNAIL_DIR, f"{video_id}.jpg")
+        print(f"\n{'='*60}")
+        print(f"YUKLENDI (taslak): {youtube_url}")
+        print(f"{'='*60}")
 
-    with open(video_path, "wb") as f:
-        f.write(final_bytes)
-    if thumbnail_bytes:
-        with open(thumb_path, "wb") as f:
-            f.write(thumbnail_bytes)
+        try:
+            intro_dur = probe_duration_file(INTRO_FILE) or 0
+            final_duration = max((duration - intro_end) + intro_dur, 10)
+            print("\nOnizleme GIF'leri olusturuluyor...")
+            first_gif = generate_gif(final_bytes, 0, 10)
+            last_gif = generate_gif(final_bytes, final_duration - 10, 10)
+            print("Telegram bildirimi gonderiliyor...")
+            asyncio.run(send_uploaded_message(
+                clip_info,
+                first_gif=first_gif,
+                last_gif=last_gif,
+                original_description=description,
+            ))
+        except Exception as e:
+            print(f"UYARI: Bildirim gonderilemedi: {e}")
 
-    clip_info["clip_id"] = clip_id
-    clip_info["video_path"] = video_path
-    clip_info["thumbnail_path"] = thumb_path
-    load_pending()
-    from telegram_bot import pending_clips
-    pending_clips[clip_id] = clip_info
-    save_pending()
+        return clip_info
 
-    preview_bytes = generate_preview(final_bytes)
-    if preview_bytes:
-        asyncio.run(send_preview(clip_id, preview_bytes, clip_info))
-
-    print(f"\n{'='*60}")
-    print(f"ISLEME TAMAMLANDI")
-    print(f"  Clip ID: {clip_id}")
-    print(f"  Intro kesildi: {intro_end:.0f}s")
-    print(f"  Onay: Telegram'dan 'Onayla' butonu")
-    print(f"{'='*60}")
-    return clip_info
+    print("HATA: Yukleme basarisiz")
+    return None
 
 
 def mark_processed(video_id, status, extra=None):
@@ -175,6 +179,7 @@ def mark_processed(video_id, status, extra=None):
         entry.update(extra)
     processed[video_id] = entry
     save_processed(processed)
+    return entry
 
 
 def run_once_mode():
@@ -199,6 +204,11 @@ def run_once_mode():
             result = process_video(url, channel_name)
             if result is None:
                 mark_processed(video["video_id"], "failed")
+            elif result.get("skipped") == "duplicate":
+                mark_processed(video["video_id"], "duplicate_skipped", {
+                    "fingerprint": result.get("fingerprint", ""),
+                    "duplicate_of": result.get("duplicate_of", ""),
+                })
             elif result.get("skipped"):
                 mark_processed(video["video_id"], "skipped_short")
             elif result.get("status") == "uploaded":
@@ -251,6 +261,11 @@ def monitor_mode():
                 result = process_video(url, channel_name)
                 if result is None:
                     mark_processed(video["video_id"], "failed")
+                elif result.get("skipped") == "duplicate":
+                    mark_processed(video["video_id"], "duplicate_skipped", {
+                        "fingerprint": result.get("fingerprint", ""),
+                        "duplicate_of": result.get("duplicate_of", ""),
+                    })
                 elif result.get("skipped"):
                     mark_processed(video["video_id"], "skipped_short")
                 elif result.get("status") == "uploaded":
@@ -283,50 +298,23 @@ def check_mode():
 
 
 def process_mode(url):
-    process_video(url)
+    result = process_video(url)
+    if result is None:
+        mark_processed("", "failed")
+    elif result.get("skipped"):
+        mark_processed(result.get("video_id", ""), "skipped_short")
+    elif result.get("status") == "uploaded":
+        mark_processed(result.get("video_id", ""), "uploaded", {
+            "youtube_url": result.get("youtube_url", ""),
+        })
 
 
 def approve_mode(clip_id):
-    load_pending()
-    result = handle_approve_sync(clip_id)
-    if not result:
-        print(f"Clip bulunamadi: {clip_id}")
-        return
-
-    video_path = result.get("video_path")
-    if not video_path or not os.path.exists(video_path):
-        print("HATA: Video dosyasi bulunamadi")
-        return
-
-    with open(video_path, "rb") as f:
-        mp4_bytes = f.read()
-
-    thumb_bytes = None
-    thumb_path = result.get("thumbnail_path")
-    if thumb_path and os.path.exists(thumb_path):
-        with open(thumb_path, "rb") as t:
-            thumb_bytes = t.read()
-
-    video_id, youtube_url = upload_clip(
-        mp4_bytes=mp4_bytes,
-        info=result,
-        thumbnail_bytes=thumb_bytes,
-    )
-
-    if video_id:
-        print(f"YouTube'a taslak olarak yuklendi: {youtube_url}")
-    else:
-        print("Yukleme basarisiz")
+    print("UYARI: Onay akisi kaldirildi. Yükleme artik otonom yapilir.")
 
 
 def reject_mode(clip_id):
-    load_pending()
-    from telegram_bot import handle_reject_sync
-    result = handle_reject_sync(clip_id)
-    if result:
-        print(f"Clip reddedildi ve silindi: {clip_id}")
-    else:
-        print(f"Clip bulunamadi: {clip_id}")
+    print("UYARI: Onay akisi kaldirildi. Yükleme artik otonom yapilir.")
 
 
 def main():

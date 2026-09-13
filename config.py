@@ -91,8 +91,9 @@ MAX_VIDEO_HEIGHT = _env_int("MAX_VIDEO_HEIGHT", 1080)
 WHISPER_MODEL = os.getenv("WHISPER_MODEL", "tiny")
 OUTPUT_FPS = _env_int("OUTPUT_FPS", 30)
 
-AUTO_UPLOAD = _env_bool("AUTO_UPLOAD", False)
+AUTO_UPLOAD = _env_bool("AUTO_UPLOAD", True)
 IN_MEMORY = _env_bool("IN_MEMORY", True)
+DUPLICATE_CHECK = _env_bool("DUPLICATE_CHECK", True)
 
 YOUTUBE_PRIVACY = os.getenv("YOUTUBE_PRIVACY", "private")
 YOUTUBE_CATEGORY = os.getenv("YOUTUBE_CATEGORY", "24")
@@ -103,6 +104,7 @@ YOUTUBE_TAGS = [t.strip() for t in os.getenv("YOUTUBE_TAGS", "").split(",") if t
 TEMP_DIR = os.path.join(BASE_DIR, "temp")
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 THUMBNAIL_DIR = os.path.join(BASE_DIR, "thumbnails")
+KAPAK_DIR = os.path.join(BASE_DIR, "Kapaklar")
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
 PROCESSED_FILE = os.path.join(DATA_DIR, "processed.json")

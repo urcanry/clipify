@@ -1,6 +1,8 @@
 import io
 import json
 import subprocess
+import threading
+import time
 
 from config import MAX_VIDEO_HEIGHT
 
@@ -39,24 +41,52 @@ def download_to_memory(url, max_height=MAX_VIDEO_HEIGHT):
         url,
     ]
     try:
-        result = subprocess.run(
+        proc = subprocess.Popen(
             cmd,
-            capture_output=True,
-            timeout=60 * 60,
-            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
         )
-        if result.returncode != 0:
-            print(f"HATA: Indirme basarisiz: {result.stderr.decode('utf-8', errors='replace')[:300]}")
+
+        chunks = []
+        total = 0
+        started = time.time()
+
+        def drain_stderr(p):
+            for line in p.stderr:
+                line = line.decode("utf-8", errors="replace").strip()
+                if line:
+                    print(f"  [yt-dlp] {line}")
+
+        reader = threading.Thread(target=drain_stderr, args=(proc,), daemon=True)
+        reader.start()
+
+        while True:
+            chunk = proc.stdout.read(1024 * 256)
+            if not chunk:
+                break
+            chunks.append(chunk)
+            total += len(chunk)
+            elapsed = time.time() - started
+            mb = total / (1024 * 1024)
+            if elapsed > 0:
+                rate = mb / elapsed
+                print(f"\r  Indiriliyor: {mb:.1f} MB @ {rate:.1f} MB/s", end="", flush=True)
+
+        print()
+        proc.wait()
+        reader.join(timeout=2)
+
+        if proc.returncode != 0:
+            print("HATA: Indirme basarisiz")
             return None
-        if not result.stdout:
+        if total == 0:
             print("HATA: Indirilen veri bos")
             return None
-        size_mb = len(result.stdout) / (1024 * 1024)
-        print(f"  Ram'e indirildi: {size_mb:.1f} MB (bellek, disk yazilmadi)")
-        return io.BytesIO(result.stdout)
-    except subprocess.TimeoutExpired:
-        print("HATA: Indirme zaman asimina ugradi")
-        return None
+
+        data = b"".join(chunks)
+        print(f"  Ram'e indirildi: {len(data) / (1024 * 1024):.1f} MB (bellek, disk yazilmadi)")
+        return io.BytesIO(data)
+
     except Exception as e:
         print(f"HATA: Indirme hatasi: {e}")
         return None

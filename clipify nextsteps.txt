@@ -1,0 +1,236 @@
+================================================================================
+ CLIPIFY - YOUTUBE OTOMATORU
+ Ilerleme ve Sonraki Adimlar Dokumani
+================================================================================
+
+YER:     C:\Users\KAYRA\Desktop\youtube-automator
+MODEL:   big-pickle (opencode)
+GUNCELLEME: 11 Eylül 2026
+
+================================================================================
+ 1. PROJE AMACI
+================================================================================
+- Takip edilen YouTube kanallarini RSS ile izleyen, yeni uzun videolari
+  (Shorts HARIC) tespit eden ve bunlari SIFIR DISK YAZIMI ile tamamen
+  RAM'de isleyip kendi kanalina TASLAK (private draft) olarak yukleyen
+  otonom bot.
+- GitHub Actions cron ile TAMAMEN UCRETSIZ 7/24 calisir.
+- Telegram uzerinden yonetim: baslik degistirme, kapak guncelleme,
+  aninda yayina alma.
+
+================================================================================
+ 2. IZLENEN KANALLAR
+================================================================================
+  Kanal      | Channel ID                          | Kanal Adi
+  -----------|-------------------------------------|----------
+  Craftest   | UCRXsu9ORjM6F-LjBRDXF2lw            | Craftest
+  cFyt       | UC3E_eF5GHqA05nPPm1riHYg           | cFyt
+  Zovek      | UCbp3D9GpQbHNTj6glCbUlsQ           | Zovek
+  2kan       | UCDsJphAxtcoBIRMM49jWYBg           | 2kan
+
+================================================================================
+ 3. ANA PIPE - 5 ADIM
+================================================================================
+  [1/5] yt-dlp ile video RAM'e indirilir (degiskenler .env / config)
+  [2/5] Intro tespiti: SponsorBlock -> Silence -> Whisper -> Scene
+        (RAM'de, numpy icinde calisir)
+  [3/5] ffmpeg ile intro + video RAM'de birlestirilip yeniden kodlanir
+  [4/5] Orijinal kapak indirilir -> 'Kapaklar' klasorune kaydedilir
+        (dosya adi = video basligi, maks 80 karakter)
+  [5/5] OTONOM YouTube yukleme -> OZEL kapak uretimi YOK, baslik =
+        ORIGINAL video basligi -> Telegram bildirimi
+
+================================================================================
+ 4. YAPILAN GUNCELLEMELER (5 BUYUK + DUZELTMELER)
+================================================================================
+  [X] 1) GitHub Actions uzerinde bedava cron (run_bot.yml, 6 saatte bir)
+  [X] 2) TAMAMEN RAM tabanli isleme (disk yok, pipelar BytesIO ile)
+  [X] 3) Sadece uzun video filtresi (MIN 300s / MAX 7200s, Shorts elenir)
+  [X] 4) Otomatik intro basina ekleme (YouTube Intro.mp4)
+  [X] 5) AI baslik/aciklama/etiket ureteci (deterministik, API'siz, telif guvenli)
+  [X] 6) MUKERRER VIDEO TESPITI (fingerprint)
+        - fingerprint.py: normalize_title + 30sn bucket'li sure hash'i
+        - Iki katman: RSS'te baslik fp, isleme sonrasi baslik+sure fp
+        - DUPLICATE_CHECK=true ile aktif
+  [X] 7) FONT & THUMBNAIL GUNCELLEMESI
+        - Rastgele font yerine SABIT font (Impact -> Arial Black -> Arial Bold)
+        - Kapakta her zaman TAM 2 KELIME (beyaz ust / sari alt)
+        - Kalin stroke (6px) + golge efekti, ortalanmis
+  [X] 8) OTONOM AKIS (onaysiz yayinlama)
+        - AUTO_UPLOAD varsayilan TRUE
+        - Yukleme biter bitmez Telegram bilgilendirmesi
+  [X] 9) GELISMIS TELEGRAM BILDIRIMI
+        - Orijinal kapak + yeni kapak KARSILASTIRMALI tek goruntu (Pillow)
+        - Ilk 10s + son 10s GIF onizlemeleri (render.generate_gif)
+        - Orijinal baslik + aciklama bilgisi
+        - Butonlar: Basligi Degistir / Kapaqi Guncelle / Yayinla
+  [X] 10) TURKCE KARAKTER DUZELTMESI (baslik ureteci)
+        - Kok neden: 'İ'.lower() -> 'i\u0307' birlesik nokta bozulmasi
+        - title_generator._clean_title artik lowercase YAPMIYOR,
+          IGNORECASE ile filtreliyor, _capitalize_turkish() ekli
+  [X] 11) --url modu artik processed.json'a isliyor
+  [X] 12) downloader: canli stream ilerleme (~saniyede MB raporu),
+        stderr yt-dlp log'lari goruntuleniyor (takilma hissi cozuldu)
+  [X] 13) OZEL KAPAK URETIMI KALDIRILDI
+        - '2 kelimeli yeni kapak' (Impact font, beyaz/sari) tamamen silindi
+        - Orijinal kapak yine indirilir ama 'Kapaklar/' klasorune
+          VIDEONUN BASLIGI adiyla (.jpg) kaydedilir -> thumbnail.py
+        - YouTube'a ozel kapak YUKLENMEZ; taslakta videonun kendinden
+          gelen kare (YouTube otomatik) kapak olur
+        - Telegram'daki 'orijinal vs yeni' kapak karsilastirmasi kaldirildi
+        - 'Kapagi Guncelle' butonu (manuel yonetim) duruyor
+  [X] 14) YUKLENEN BASLIK = ORIGINAL BASLIK
+        - uploader.py'de generate_title() yerine videonun asil basligi
+        - Aciklama + etiket uretimi aynen devam (title_generator.py)
+        - Telegram bildiriminde tek 'Baslik' gosterilir
+
+================================================================================
+ 5. DOSYA YAPISI
+================================================================================
+  main.py            -> Orkestrator (--monitor / --run-once / --check / --url)
+  config.py          -> Tum ayarlar (.env / ortam degiskenleri)
+  monitor.py         -> RSS kanal tarama + fingerprint duplicate kontrol
+  fingerprint.py     -> Icerik parmak izi (normalize + sure bucket + hash)
+  downloader.py      -> RAM'e yt-dlp stream (canli ilerleme raporu)
+  intro_detector.py  -> Intro bitis tespiti (SponsorBlock/silence/whisper/scene)
+  render.py          -> render_final (intro+video concat), generate_preview,
+                        generate_gif (ilk/son 10s)
+  ffmpeg_utils.py    -> pipe/BytesIO ffmpeg yardimcilari + probe_duration_file
+  thumbnail.py       -> Orijinal kapak indirme + 'Kapaklar/' klasorune
+                        video basligi adiyla kaydetme (maks 80 karakter)
+  title_generator.py -> AI (deterministik) ayarlar: aciklama + etiket ureteci
+                        (baslik uretimi artik kullanilmiyor)
+  uploader.py        -> YouTube upload + set_thumbnail + update_video_title
+                        + set_privacy + publish_video
+  telegram_bot.py    -> Bildirimler + interaktif yonetim (rename/thumb/publish)
+  YouTube Intro.mp4  -> 2.17s, 1920x1080, H.264, 30fps, STEREO AAC 48kHz
+  requirements.txt   -> yt-dlp, google-api-*, python-telegram-bot, whisper,
+                        numpy, requests, isodate, Pillow
+  setup_auth.py      -> OAuth2 kurulumu
+  .github/workflows/run_bot.yml -> GitHub Actions ucretsiz cron
+  data/processed.json, uploads.json, pending_clips.json -> durum dosyalari
+  Kapaklar/          -> indirilen orijinal kapaklar (video basligi .jpg)
+  client_secrets.json, token.json -> OAuth2 kimlikler
+
+================================================================================
+ 6. YAPILANDIRMA (config.py, hepsi env ile degistirilebilir)
+================================================================================
+  AUTO_UPLOAD=true            (artik varsayilan TRUE)
+  IN_MEMORY=true
+  DUPLICATE_CHECK=true
+  INTRO_METHOD=auto
+  INTRO_FILE=YouTube Intro.mp4
+  MIN_VIDEO_DURATION=300      (5 dk - Shorts elenir)
+  MAX_VIDEO_DURATION=7200     (2 saat)
+  MAX_VIDEO_HEIGHT=1080
+  WHISPER_MODEL=tiny
+  YOUTUBE_PRIVACY=private     (taslak)
+  YOUTUBE_CATEGORY=24
+  MONITOR_INTERVAL=300
+  TELEGRAM_BOT_TOKEN=8680230826:AAFXL3ZAqgqg3nfBWPa8vnaUgQguoPdmbtg
+  TELEGRAM_CHAT_ID=8643672758
+
+ Github Actions secret'lari:
+  TELEGRAM_BOT_TOKEN
+  TELEGRAM_CHAT_ID
+  YOUTUBE_TOKEN_JSON        (token.json -> base64)
+  CLIENT_SECRETS_JSON       (client_secrets.json -> base64)
+  CHANNELS_JSON             (opsiyonel)
+
+ yt-dlp zorunlu bayraklar:
+  --js-runtimes node
+  --remote-components ejs:github
+  --extractor-args "youtube:player_client=web_embedded"
+
+================================================================================
+ 7. TEST EDILEN / DOGRULANAN
+================================================================================
+  [X] RAM 30s bolum indirme (6.1 MB) -> valid WebM stream
+  [X] RAM render, intro'suz (10.5 MB) ve INTRO'LU (10.3 MB)
+  [X] Telegram InputFile(bytes) onizleme (HTTP 200)
+  [X] AI baslik/aciklama uretimi
+  [X] TAM E2E: D5fZVBx5nhY 23dk video -> indirme 103MB -> intro 4.4s
+      -> render 421.8MB -> YUKLENDI: https://www.youtube.com/watch?v=8D--qewoPmQ
+      (private taslak)  [Tarih: 10 Eyl 2026]
+  [X] Orijinal kapak indirme -> 'Kapaklar/<video basligi>.jpg' kaydi
+  [X] Orijinal baslikla taslak yukleme (generate_title kaldirildi)
+  [X] (Kaldirildi) 2 kelimeli thumbnail uretimi, karsilastirmali kapak
+  [X] Turkce karakter: 'İzleyicilerin Yaşadığı' dogru korunuyor
+  [X] Fingerprint: ayni baslik farkli case -> duplicate TRUE
+      Part 1 vs Part 2 -> FALSE (farkli video)
+      Ayni baslik farkli sure bucket -> FALSE
+  [X] GIF uretimi (sentetik video ile GIF89a dogrulandi)
+  [X] Tum moduller py_compile OK
+
+================================================================================
+ 8. BILINEN NOTLAR / SORUNLAR
+================================================================================
+  A) YouTube'da bazen SABR-only streaming deneyi aktif olur:
+     "Some web_embedded client https formats have been skipped..."
+     -> YUMURTALAMA YOK, indirme biraz yavas olabilir (bazen 0.1 MB/s).
+
+  B) Rendering 'ultrafast' preset + CRF 23 kullaniyor:
+     - 23dk 1080p video ~5-15dk kodlanir (CPU'ya bagli)
+     - YouTube zaten yeniden kodlayacagi icin goruntu kalitesi yeterli
+     - Istenirse render.py'de preset/crf artirilabilir (daha kaliteli,
+       daha yavas)
+
+  C) Ilk kurulum (processed.json yoksa): son 5 video 'islenmis' sayilir,
+     ilk calismada hicbir sey yuklenmez. (monitor.first_run)
+
+  D) --monitor modunde Telegram bot threading ile donup Token yenileme
+     vs. icin dosya gizli klasorde tutulur.
+
+  E) Baslik 100 karaktere sinirli (YouTube limiti); uzun orijinal
+     basliklar uploader'da ilk 100 karaktere kapatilir.
+
+  F) Upload sirasinda dosya boyutu 4000MB siniri (MAX_VIDEO_SIZE_MB).
+
+  G) Tikandiginda terminal ciktisini GORMEK icin:
+     python main.py --url <URL> komutunda -u bayragi ozellikle gerekmez,
+     ama PowerShell'de ciktinin kesilmesi normaldir.
+     Ilerleme downloader.py'de saniyelik MB raporu ile gosterilir.
+
+================================================================================
+ 9. SONRAKI ADIMLAR (ONCELIK SIRASIYLA)
+================================================================================
+  [ ] 1) GitHub Actions secret'larini gir ve git push yap
+           Workflow: .github/workflows/run_bot.yml (cron 0 */6 * * *)
+           Her calismasinda: processed.json guncellenir, yeni video varsa
+           islenir ve taslak olarak yuklenir.
+  [ ] 2) Full uzun-video E2E (77dk video) cansiz RAM + uzun sure testi
+           (istenirse --url ile). RAM kullanimini izle; GitHub Actions
+           ubuntu runner 7GB RAM limitini asmamali.
+  [ ] 3) GitHub Actions'ta ilk calismayi dogrula:
+           - Secrets dogru basildi mi (base64 decode)
+           - Token gecmis mi
+           - ffmpeg/yt-dlp node kurulumu OK
+           - processed.json geri commit ediliyor mu
+  [ ] 4) Opsiyonel: Intro tespitini iyilestir
+           - SponsorBlock first-segment API'dan fallback olarak gecici
+           - Whisper 'base' / 'small' model denemek istersen WHISPER_MODEL
+  [ ] 5) [GECERSIZ] Ozel kapak uretimi kaldirildi (12. maddede 13).
+          Kapaklar/ klasoru yerel bir arsivdir; istenirse ornek:
+          kapaklarin duzenli saklanmasi / isim cakisma onlemi
+  [ ] 6) Opsiyonel: Haftalik istatistik raporu (Telegram'a ozet)
+           - Kac video yuklendi, toplam gorsel liter, izlenme olmasa da islem metrigi
+  [ ] 7) Opsiyonel: MULTI-KANAL etiketi - ust/alt kelime icin kategori
+           etiketleri (Ornek: Craftest->OYUN, cFyt->KESIT vs.)
+
+================================================================================
+ 10. YORUM / KARARLAR
+================================================================================
+  - 'AI baslik' aslinda deterministik template tabanli uretecidir (API'siz).
+    Bu, tutarli marka dili ve 0 maliyet saglar. 'Anlaminda', 'Skeçleri ve'
+    gibi varyasyonlar tamamen telif guvenlidir. [ARTIK SADECE aciklama + etiket
+    icin kullanilir; taslak basligi orijinal videonun basligidir.]
+  - Ozel kapak uretimi kapatildi: YouTube'a kapak yuklenmez, otomatik kare
+    kullanilir. Orijinal kapak yalnizca 'Kapaklar/' klasorune arsivlenir.
+  - Banlanma/telif riski icin: video once intro olmadan kesilip cikar,
+    hicbir tam duplikasyon yapilmaz. YouTube IQ yine de karar verir.
+  - Otonom upload private taslak olarak yapilir; yayina alma istege bagli
+    (Telegram'da 'Yayinla' butonu) ya da YOUTUBE_PRIVACY=public ile otomatik.
+
+================================================================================
+ SON
+================================================================================
