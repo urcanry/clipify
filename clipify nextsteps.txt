@@ -127,7 +127,7 @@ GUNCELLEME: 11 Eylül 2026
   YOUTUBE_PRIVACY=private     (taslak)
   YOUTUBE_CATEGORY=24
   MONITOR_INTERVAL=300
-  TELEGRAM_BOT_TOKEN=8680230826:AAFXL3ZAqgqg3nfBWPa8vnaUgQguoPdmbtg
+  TELEGRAM_BOT_TOKEN=<gizli - .env dosyasindan veya GitHub Actions secret'indan geliyor>
   TELEGRAM_CHAT_ID=8643672758
 
  Github Actions secret'lari:

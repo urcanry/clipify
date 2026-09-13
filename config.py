@@ -4,6 +4,25 @@ import json
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
+def _load_dotenv():
+    path = os.path.join(BASE_DIR, ".env")
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if key and key not in os.environ:
+                os.environ[key] = value
+
+
+_load_dotenv()
+
+
 def _env_float(name, default):
     try:
         return float(os.getenv(name, default))
@@ -74,7 +93,7 @@ def _load_channels():
 
 CHANNELS = _load_channels()
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "8680230826:AAFXL3ZAqgqg3nfBWPa8vnaUgQguoPdmbtg")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "8643672758")
 
 INTRO_METHOD = os.getenv("INTRO_METHOD", "auto")
@@ -83,6 +102,7 @@ INTRO_MIN_DURATION = _env_int("INTRO_MIN_DURATION", 3)
 INTRO_FIXED_SECONDS = _env_int("INTRO_FIXED_SECONDS", 25)
 
 INTRO_FILE = os.path.join(BASE_DIR, "YouTube Intro.mp4")
+LOGO_FILE = os.getenv("LOGO_FILE", os.path.join(BASE_DIR, "logo.jpg"))
 
 MIN_VIDEO_DURATION = _env_int("MIN_VIDEO_DURATION", 300)
 MAX_VIDEO_DURATION = _env_int("MAX_VIDEO_DURATION", 7200)

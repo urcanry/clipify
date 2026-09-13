@@ -1,9 +1,10 @@
 ﻿import io
 import os
+import tempfile
 
-from config import INTRO_FILE, OUTPUT_FPS
+from config import INTRO_FILE, OUTPUT_FPS, LOGO_FILE
 
-from ffmpeg_utils import run_ffmpeg_pipe, probe_dimensions
+from ffmpeg_utils import run_ffmpeg_pipe, probe_dimensions, probe_duration_file, probe_has_audio
 
 
 def _scale_filter(w, h, fps):
@@ -31,52 +32,96 @@ def render_final(video_bytes, intro_end, fallback_size=(1920, 1080)):
     w, h = int(w) & ~1, int(h) & ~1
     fps = OUTPUT_FPS
 
-    intro_bytes, intro_missing = load_intro_bytes()
-    if intro_missing:
-        print(f"  UYARI: '{INTRO_FILE}' bulunamadi. Intro eklenmedi, video yeniden kodlandi.")
+    scale_i = _scale_filter(w, h, fps)
+    scale_c = _scale_filter(w, h, fps)
+    aformat = "aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo"
+    vcodec = ["-c:v", "libx264", "-preset", "ultrafast", "-crf", "23"]
+    acodec = ["-c:a", "aac", "-b:a", "192k"]
 
-        scale = _scale_filter(w, h, fps)
-        args = [
-            "-i", "pipe:0",
-            "-filter_complex",
-            (
-                f"[0:v]{scale}[vo];"
-                f"[0:a]atrim=start={intro_end},asetpts=PTS-STARTPTS,"
-                f"aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[ao]"
-            ),
-            "-map", "[vo]", "-map", "[ao]",
-"-c:v", "libx264", "-preset", "ultrafast", "-crf", "23",
-            "-c:a", "aac", "-b:a", "192k",
-            "-movflags", "+empty_moov+frag_keyframe",
-            "-f", "mp4", "pipe:1",
-        ]
-    else:
-        scale_i = _scale_filter(w, h, fps)
-        scale_c = _scale_filter(w, h, fps)
-        args = [
-            "-i", INTRO_FILE,
-            "-i", "pipe:0",
-            "-filter_complex",
-            (
-                f"[0:v]{scale_i}[iv];"
-                f"[0:a]aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[ia];"
-                f"[1:v]trim=start={intro_end},setpts=PTS-STARTPTS,{scale_c}[cv];"
-                f"[1:a]atrim=start={intro_end},asetpts=PTS-STARTPTS,"
-                f"aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[ca];"
-                f"[iv][ia][cv][ca]concat=n=2:v=1:a=1[vo][ao]"
-            ),
-            "-map", "[vo]", "-map", "[ao]",
-"-c:v", "libx264", "-preset", "ultrafast", "-crf", "23",
-            "-c:a", "aac", "-b:a", "192k",
-            "-movflags", "+empty_moov+frag_keyframe",
-            "-f", "mp4", "pipe:1",
-        ]
-
+    tmp_in = None
+    tmp_out = None
     try:
-        out = run_ffmpeg_pipe(args, input_bytes=video_bytes, timeout=2 * 60 * 60)
-    except RuntimeError as e:
-        print(f"  HATA: Video isleme basarisiz: {e}")
-        return None
+        try:
+            fd_in, tmp_in = tempfile.mkstemp(suffix=".mp4")
+            os.close(fd_in)
+            with open(tmp_in, "wb") as f:
+                f.write(video_bytes)
+            fd_out, tmp_out = tempfile.mkstemp(suffix=".mp4")
+            os.close(fd_out)
+        except OSError as e:
+            print(f"  HATA: Gecici dosya olusturulamadi: {e}")
+            return None
+
+        _, intro_missing = load_intro_bytes()
+
+        if intro_missing:
+            print(f"  UYARI: '{INTRO_FILE}' bulunamadi. Intro eklenmedi, video yeniden kodlandi.")
+            filter_complex = (
+                f"[0:v]{scale_i}[vo];"
+                f"[0:a]atrim=start={intro_end},asetpts=PTS-STARTPTS,{aformat}[ao]"
+            )
+            inputs = ["-i", tmp_in]
+            if os.path.exists(LOGO_FILE):
+                inputs += ["-i", LOGO_FILE]
+                filter_complex += (
+                    f";[1:v]scale=110:110:force_original_aspect_ratio=decrease[lg];"
+                    f"[vo][lg]overlay=W-w-16:16[vof]"
+                )
+            out_label = "vof" if os.path.exists(LOGO_FILE) else "vo"
+            args = [
+                *inputs,
+                "-filter_complex", filter_complex,
+                "-map", f"[{out_label}]", "-map", "[ao]",
+                *vcodec, *acodec,
+                tmp_out,
+            ]
+        else:
+            intro_dur = probe_duration_file(INTRO_FILE) or 2.0
+            intro_has_audio = probe_has_audio(INTRO_FILE)
+            if intro_has_audio:
+                filter_complex = (
+                    f"[0:v]{scale_i}[iv];"
+                    f"[0:a]{aformat}[ia];"
+                    f"[1:v]trim=start={intro_end},setpts=PTS-STARTPTS,{scale_c}[cv];"
+                    f"[1:a]atrim=start={intro_end},asetpts=PTS-STARTPTS,{aformat}[ca];"
+                    f"[iv][ia][cv][ca]concat=n=2:v=1:a=1[vo][ao]"
+                )
+            else:
+                filter_complex = (
+                    f"[0:v]{scale_i}[iv];"
+                    f"[1:v]trim=start={intro_end},setpts=PTS-STARTPTS,{scale_c}[cv];"
+                    f"[1:a]atrim=start={intro_end},asetpts=PTS-STARTPTS,{aformat}[ca];"
+                    f"aevalsrc=0:s=48000:c=stereo:d={intro_dur},asetpts=PTS-STARTPTS,{aformat}[ia];"
+                    f"[iv][ia][cv][ca]concat=n=2:v=1:a=1[vo][ao]"
+                )
+            inputs = ["-i", INTRO_FILE, "-i", tmp_in]
+            if os.path.exists(LOGO_FILE):
+                inputs += ["-i", LOGO_FILE]
+                filter_complex += (
+                    f";[2:v]scale=110:110:force_original_aspect_ratio=decrease[lg];"
+                    f"[vo][lg]overlay=W-w-16:16[vof]"
+                )
+            out_label = "vof" if os.path.exists(LOGO_FILE) else "vo"
+            args = [
+                *inputs,
+                "-filter_complex", filter_complex,
+                "-map", f"[{out_label}]", "-map", "[ao]",
+                *vcodec, *acodec,
+                tmp_out,
+            ]
+
+        try:
+            run_ffmpeg_pipe(args, input_bytes=None, timeout=2 * 60 * 60)
+        except RuntimeError as e:
+            print(f"  HATA: Video isleme basarisiz: {e}")
+            return None
+
+        with open(tmp_out, "rb") as f:
+            out = f.read()
+    finally:
+        for p in (tmp_in, tmp_out):
+            if p and os.path.exists(p):
+                os.remove(p)
 
     if out:
         size_mb = len(out) / (1024 * 1024)
