@@ -239,5 +239,21 @@
   "": {
     "status": "failed",
     "processed_at": "2026-09-13T10:40:45.432114"
+  },
+  "HiEIZZSYjdI": {
+    "title": "RRaenee | AZITMAYIN ARTIK | Motosiklet Kazaları (311) | İzliyor @Zafer AKCAY​",
+    "channel": "Craftest",
+    "detected_at": "2026-09-14T18:11:39.917907",
+    "fingerprint": "c8ef3bf4657aec6b",
+    "status": "failed",
+    "processed_at": "2026-09-14T18:11:41.959582"
+  },
+  "srKLGfk_MZM": {
+    "title": "RRaenee | Bilsem uzaklarda kimler ağlıyor",
+    "channel": "2kan",
+    "detected_at": "2026-09-14T18:11:40.648483",
+    "fingerprint": "cbcab5115a34fe97",
+    "status": "failed",
+    "processed_at": "2026-09-14T18:11:43.471760"
   }
 }
