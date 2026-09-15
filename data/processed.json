@@ -255,5 +255,133 @@
     "fingerprint": "cbcab5115a34fe97",
     "status": "failed",
     "processed_at": "2026-09-14T18:11:43.471760"
+  },
+  "AWeFqGzQvi4": {
+    "title": "RRaenee | EN RAHATSIZ EDİCİ 7 OLAY | İzliyor @0derece",
+    "channel": "Craftest",
+    "detected_at": "2026-09-15T00:13:59.695950",
+    "fingerprint": "960d2c17495d6c69",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:01.751981"
+  },
+  "1gOg4HdSIiM": {
+    "title": "RRaenee | Eğer Bir Karınca Olarak Doğsaydın? | İzliyor @JudezDonca",
+    "channel": "Craftest",
+    "detected_at": "2026-09-15T00:13:59.696028",
+    "fingerprint": "0de2c402ad6354a6",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:03.682479"
+  },
+  "BBKWJ8PE1s4": {
+    "title": "RRaenee | Eğer Bir Peygamberdevesi Olarak Doğsaydın? | İzliyor @JudezDonca",
+    "channel": "Craftest",
+    "detected_at": "2026-09-15T00:13:59.696085",
+    "fingerprint": "72ecdcd94841e08a",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:05.477505"
+  },
+  "xJA2lPRuhN8": {
+    "title": "RRaenee | Eğer Bir Hamam Böceği Olarak Doğsaydın? | İzliyor @JudezDonca",
+    "channel": "Craftest",
+    "detected_at": "2026-09-15T00:13:59.696143",
+    "fingerprint": "487c2090c75894cd",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:07.041736"
+  },
+  "QPM22QSyo18": {
+    "title": "Karınca Olarak Doğsaydın? TEPKİ! (@JudezDonca) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-15T00:13:59.919538",
+    "fingerprint": "f7bdabf43a98e199",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:08.401662"
+  },
+  "apUoBB5ic8o": {
+    "title": "Peygamberdevesi Olarak Doğsaydın? TEPKİ! (@JudezDonca) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-15T00:13:59.919609",
+    "fingerprint": "bef1552750b40c74",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:10.050942"
+  },
+  "by3Rmr30Z0o": {
+    "title": "Hamam Böceği Olarak Doğsaydın? TEPKİ! (@JudezDonca) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-15T00:13:59.919664",
+    "fingerprint": "3232f3d2353706c0",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:11.786693"
+  },
+  "bxYMByLFVS0": {
+    "title": "Motorcu Kazalarına Tepki #78 (@Zafer AKCAY) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-15T00:13:59.919714",
+    "fingerprint": "23ff0bc6751fcfa7",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:13.305967"
+  },
+  "_8-oFgsQ2uo": {
+    "title": "RRAENEE | MOTOSIKLET KAZALARINI IZLIYOR! (‪‪@ZaferAKCAY)",
+    "channel": "Zovek",
+    "detected_at": "2026-09-15T00:14:00.151816",
+    "fingerprint": "bc3cce46d2846ed5",
+    "status": "duplicate_skipped",
+    "duplicate_of": "DfAh6KKDEcI"
+  },
+  "77Ql2MY8Hp0": {
+    "title": "RRAENEE | \"Eğer Bir Karınca Olarak Doğsaydın?\" IZLIYOR! (@JudezDonca)",
+    "channel": "Zovek",
+    "detected_at": "2026-09-15T00:14:00.151898",
+    "fingerprint": "4ef148e30278c335",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:14.809404"
+  },
+  "l7NNQZR0-uw": {
+    "title": "RRAENEE | \"Eğer Bir Hamam Böceği Olarak Doğsaydın?\" IZLIYOR! (@JudezDonca)",
+    "channel": "Zovek",
+    "detected_at": "2026-09-15T00:14:00.151956",
+    "fingerprint": "a86b344ba735168b",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:16.110944"
+  },
+  "VNakrhwXlzE": {
+    "title": "RRAENEE | \"Eğer Bir Peygamberdevesi Olarak Doğsaydın?\" IZLIYOR! (@JudezDonca)",
+    "channel": "Zovek",
+    "detected_at": "2026-09-15T00:14:00.152010",
+    "fingerprint": "3e260a2bd240ae06",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:17.733778"
+  },
+  "HkBpsbW6WR4": {
+    "title": "RRaenee | Eğer Bir Karınca Olarak Doğsaydın? Tepki! @JudezDonca",
+    "channel": "2kan",
+    "detected_at": "2026-09-15T00:14:00.445232",
+    "fingerprint": "8bbbaf693ec3b5e4",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:19.498570"
+  },
+  "QX_NDUMvaXA": {
+    "title": "RRaenee | Eğer Bir Peygamberdevesi Olarak Doğsaydın? Tepki! @JudezDonca",
+    "channel": "2kan",
+    "detected_at": "2026-09-15T00:14:00.445308",
+    "fingerprint": "7699f999486f50da",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:21.543749"
+  },
+  "8nrwDDWwNN4": {
+    "title": "RRaenee | Eğer Bir Hamam Böceği Olarak Doğsaydın? Tepki! @JudezDonca",
+    "channel": "2kan",
+    "detected_at": "2026-09-15T00:14:00.445371",
+    "fingerprint": "2e6817062a3f504c",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:23.328331"
+  },
+  "dvrEWW4vJGc": {
+    "title": "RRaenee | Motosiklet Kazalarına Tepki! #9 @ZaferAKCAY",
+    "channel": "2kan",
+    "detected_at": "2026-09-15T00:14:00.445427",
+    "fingerprint": "568438cc5fdda0e8",
+    "status": "failed",
+    "processed_at": "2026-09-15T00:14:24.714747"
   }
 }
