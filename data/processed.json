@@ -383,5 +383,45 @@
     "fingerprint": "568438cc5fdda0e8",
     "status": "failed",
     "processed_at": "2026-09-15T00:14:24.714747"
+  },
+  "6sVRuD-ePSQ": {
+    "title": "RRaenee | Kolombiya’da Genelev Baskınına Katıldım! Polislerle 1 Hafta Baskın | Tepki | @AlperRENDE",
+    "channel": "Craftest",
+    "detected_at": "2026-09-15T18:11:20.079074",
+    "fingerprint": "15f617d4e276adcf",
+    "status": "failed",
+    "processed_at": "2026-09-15T18:11:22.805753"
+  },
+  "HxugKm8QaT0": {
+    "title": "RRaenee | Masum Görünen En Ölümcül Hayvanlar | Tepki | @ilgincdimi",
+    "channel": "Craftest",
+    "detected_at": "2026-09-15T18:11:20.079155",
+    "fingerprint": "74e505c682b43ce8",
+    "status": "failed",
+    "processed_at": "2026-09-15T18:11:24.381986"
+  },
+  "xjkO5wGFvaI": {
+    "title": "RRaenee | Hala Aramızda Olan Seri Katiller | Tepki | @ilgincdimi",
+    "channel": "Craftest",
+    "detected_at": "2026-09-15T18:11:20.079230",
+    "fingerprint": "b0848aa1652f5bce",
+    "status": "failed",
+    "processed_at": "2026-09-15T18:11:26.110362"
+  },
+  "epHsMhpInMs": {
+    "title": "RRaenee | Masum Görünen En Ölümcül Hayvanlar Tepki! @ilgincdimi",
+    "channel": "2kan",
+    "detected_at": "2026-09-15T18:11:20.884449",
+    "fingerprint": "74e505c682b43ce8",
+    "status": "duplicate_skipped",
+    "duplicate_of": "HxugKm8QaT0"
+  },
+  "yevPytJWUc0": {
+    "title": "RRaenee | Hala Aramızda Olan Seri Katiller Tepki! @ilgincdimi",
+    "channel": "2kan",
+    "detected_at": "2026-09-15T18:11:20.884503",
+    "fingerprint": "b0848aa1652f5bce",
+    "status": "duplicate_skipped",
+    "duplicate_of": "xjkO5wGFvaI"
   }
 }
