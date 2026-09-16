@@ -423,5 +423,53 @@
     "fingerprint": "b0848aa1652f5bce",
     "status": "duplicate_skipped",
     "duplicate_of": "xjkO5wGFvaI"
+  },
+  "cxhbq8sSH9A": {
+    "title": "ORİJİNALİNDEN DAHA İYİ HAHSJKDHJKASD",
+    "channel": "Craftest",
+    "detected_at": "2026-09-16T00:13:09.837451",
+    "fingerprint": "349d49d31605e1a8",
+    "status": "failed",
+    "processed_at": "2026-09-16T00:13:12.720507"
+  },
+  "vM7lynQMz74": {
+    "title": "RRaenee | EĞER BİR KEKO OLARAK DOĞSAYDIN ? | Tepki | @Mitosarsiv",
+    "channel": "Craftest",
+    "detected_at": "2026-09-16T00:13:09.837536",
+    "fingerprint": "7249a62106dd16ba",
+    "status": "failed",
+    "processed_at": "2026-09-16T00:13:14.085218"
+  },
+  "iwUW8T2tG6I": {
+    "title": "Kolombiya'da Genelev Baskınına Tepki! (@AlperRENDE) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-16T00:13:10.264909",
+    "fingerprint": "ae8a9b44b092d638",
+    "status": "failed",
+    "processed_at": "2026-09-16T00:13:15.632763"
+  },
+  "1zWfBVc10aw": {
+    "title": "Hala Aramızda Olan Seri Katillere Tepki! (@ilgincdimi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-16T00:13:10.265044",
+    "fingerprint": "28ac9b9605fd0348",
+    "status": "failed",
+    "processed_at": "2026-09-16T00:13:17.150792"
+  },
+  "hvQE06tlXqk": {
+    "title": "RRaenee | Eğer Bir Keko Olarak Doğsaydın? Tepki! (1-2.Bölüm) @Mitosarsiv",
+    "channel": "2kan",
+    "detected_at": "2026-09-16T00:13:11.168434",
+    "fingerprint": "f1f6496301923fd2",
+    "status": "failed",
+    "processed_at": "2026-09-16T00:13:18.575987"
+  },
+  "eg7qq1SazEI": {
+    "title": "RRaenee | Kolombiya'da Genelev Baskınına Katıldım Tepki! @AlperRENDE",
+    "channel": "2kan",
+    "detected_at": "2026-09-16T00:13:11.168509",
+    "fingerprint": "d405630ccf280173",
+    "status": "failed",
+    "processed_at": "2026-09-16T00:13:19.926609"
   }
 }
