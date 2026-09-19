@@ -511,5 +511,29 @@
     "fingerprint": "e4ac165ddb4439d1",
     "status": "failed",
     "processed_at": "2026-09-19T12:11:35.049134"
+  },
+  "XV03X_7U_ME": {
+    "title": "RRaenee | Beşli kombo canavar kurt",
+    "channel": "2kan",
+    "detected_at": "2026-09-19T18:10:35.317927",
+    "fingerprint": "6e9c7876520e03cc",
+    "status": "failed",
+    "processed_at": "2026-09-19T18:10:36.785571"
+  },
+  "4ZVTaRdDzIU": {
+    "title": "RRaenee | Mermiyi yedi kafasına",
+    "channel": "2kan",
+    "detected_at": "2026-09-19T18:10:35.317987",
+    "fingerprint": "57440415e0b2cccb",
+    "status": "failed",
+    "processed_at": "2026-09-19T18:10:38.220078"
+  },
+  "95-tebUpg2A": {
+    "title": "RRaenee | Hakkını veririz böyle",
+    "channel": "2kan",
+    "detected_at": "2026-09-19T18:10:35.318034",
+    "fingerprint": "035f9bd7a8019276",
+    "status": "failed",
+    "processed_at": "2026-09-19T18:10:39.440476"
   }
 }
