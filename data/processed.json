@@ -543,5 +543,93 @@
     "fingerprint": "7f1324341c84601a",
     "status": "failed",
     "processed_at": "2026-09-20T00:14:00.216941"
+  },
+  "yGatUtc_LkI": {
+    "title": "RRaenee | Eğer Bir Sivrisinek Olarak Doğsaydın? | İzliyor @JudezDonca",
+    "channel": "Craftest",
+    "detected_at": "2026-09-20T18:11:03.738593",
+    "fingerprint": "cf041f37defcf42c",
+    "status": "failed",
+    "processed_at": "2026-09-20T18:11:06.309439"
+  },
+  "tWZp25JE234": {
+    "title": "RRaenee | Neden Olduğu Bilinmeyen Ürkütücü Siteler | Tepki | @ilgincdimi",
+    "channel": "Craftest",
+    "detected_at": "2026-09-20T18:11:03.738664",
+    "fingerprint": "f1671c7c3fd70dd1",
+    "status": "failed",
+    "processed_at": "2026-09-20T18:11:07.620822"
+  },
+  "EXW-dBcuLEU": {
+    "title": "RRaenee | EĞER BİR KEKO OLARAK DOĞSAYDIN ? | 3. Bölüm | Tepki | @Mitosarsiv",
+    "channel": "Craftest",
+    "detected_at": "2026-09-20T18:11:03.738727",
+    "fingerprint": "347d8bb7cd187ffa",
+    "status": "failed",
+    "processed_at": "2026-09-20T18:11:09.002967"
+  },
+  "-UCJcRsc17E": {
+    "title": "RRaenee | Motosiklet Kazaları (312) | İzliyor @Zafer AKCAY​",
+    "channel": "Craftest",
+    "detected_at": "2026-09-20T18:11:03.738786",
+    "fingerprint": "a295794dca1f42b0",
+    "status": "failed",
+    "processed_at": "2026-09-20T18:11:10.334619"
+  },
+  "BSGAvOpKWsI": {
+    "title": "Sivrisinek Olarak Doğsaydın? TEPKİ! (@JudezDonca) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-20T18:11:03.921660",
+    "fingerprint": "51d1f84954081a6e",
+    "status": "failed",
+    "processed_at": "2026-09-20T18:11:11.608623"
+  },
+  "EPVGmeM526s": {
+    "title": "Neden Olduğu Bilinmeyen Sitelere Tepki! (@ilgincdimi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-20T18:11:03.921730",
+    "fingerprint": "69f1dd992631e76c",
+    "status": "failed",
+    "processed_at": "2026-09-20T18:11:12.876440"
+  },
+  "dKaJhdH8cJA": {
+    "title": "Motorcu Kazalarına Tepki #79 (@Zafer AKCAY) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-09-20T18:11:03.921762",
+    "fingerprint": "23ff0bc6751fcfa7",
+    "status": "duplicate_skipped",
+    "duplicate_of": "bxYMByLFVS0"
+  },
+  "OyI7T-zkntM": {
+    "title": "RRaenee | Eğer Bir Sivrisinek Olarak Doğsaydın? Tepki! @JudezDonca",
+    "channel": "2kan",
+    "detected_at": "2026-09-20T18:11:04.443128",
+    "fingerprint": "511d1e664b5a517a",
+    "status": "failed",
+    "processed_at": "2026-09-20T18:11:14.107084"
+  },
+  "lydgQCHgOrc": {
+    "title": "RRaenee | Neden Olduğu Bilinmeyen Ürkütücü Siteler Tepki! @ilgincdimi",
+    "channel": "2kan",
+    "detected_at": "2026-09-20T18:11:04.443176",
+    "fingerprint": "f1671c7c3fd70dd1",
+    "status": "duplicate_skipped",
+    "duplicate_of": "tWZp25JE234"
+  },
+  "DkCjBV8Gu2w": {
+    "title": "RRaenee | Eğer Bir Keko Olarak Doğsaydın? 3.Bölüm Tepki! @Mitosarsiv ​",
+    "channel": "2kan",
+    "detected_at": "2026-09-20T18:11:04.443238",
+    "fingerprint": "094ab4a9f44e1053",
+    "status": "failed",
+    "processed_at": "2026-09-20T18:11:15.585768"
+  },
+  "IUiKlMbv0ho": {
+    "title": "RRaenee | Motosiklet Kazalarına Tepki! #10 @ZaferAKCAY",
+    "channel": "2kan",
+    "detected_at": "2026-09-20T18:11:04.443269",
+    "fingerprint": "568438cc5fdda0e8",
+    "status": "duplicate_skipped",
+    "duplicate_of": "dvrEWW4vJGc"
   }
 }
