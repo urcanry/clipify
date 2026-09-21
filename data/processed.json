@@ -639,5 +639,13 @@
     "fingerprint": "2f9a03d8839cce8e",
     "status": "failed",
     "processed_at": "2026-09-21T00:13:45.682938"
+  },
+  "jn4FKbgvxaA": {
+    "title": "GERÇEK GİBİ ASDKJHASJHKD",
+    "channel": "Craftest",
+    "detected_at": "2026-09-21T18:11:30.262545",
+    "fingerprint": "5989aae6473a8234",
+    "status": "failed",
+    "processed_at": "2026-09-21T18:11:32.656269"
   }
 }
