@@ -663,5 +663,21 @@
     "fingerprint": "427388dac6777ea1",
     "status": "failed",
     "processed_at": "2026-09-24T12:12:57.097753"
+  },
+  "U8dK-2WhYOg": {
+    "title": "RRaenee | Vay koçum benim",
+    "channel": "2kan",
+    "detected_at": "2026-09-24T18:11:48.714270",
+    "fingerprint": "d7d5f99f0a40578d",
+    "status": "failed",
+    "processed_at": "2026-09-24T18:11:50.015628"
+  },
+  "Aetf9N62T0w": {
+    "title": "RRaenee | Akar gider canlar",
+    "channel": "2kan",
+    "detected_at": "2026-09-24T18:11:48.714330",
+    "fingerprint": "9a7a200d5fae31d6",
+    "status": "failed",
+    "processed_at": "2026-09-24T18:11:51.608457"
   }
 }
