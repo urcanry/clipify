@@ -679,5 +679,37 @@
     "fingerprint": "9a7a200d5fae31d6",
     "status": "failed",
     "processed_at": "2026-09-24T18:11:51.608457"
+  },
+  "_GmUIKoxfEo": {
+    "title": "RRaenee | En Acı Verici Bubi Tuzakları | Tepki | @ilgincdimi",
+    "channel": "Craftest",
+    "detected_at": "2026-10-01T18:14:43.999955",
+    "fingerprint": "b560f8516942cb84",
+    "status": "failed",
+    "processed_at": "2026-10-01T18:14:46.046728"
+  },
+  "vtC4s6dxxZo": {
+    "title": "NOLDU BUNA AJKHSDJHKASJHKD",
+    "channel": "Craftest",
+    "detected_at": "2026-10-01T18:14:44.000012",
+    "fingerprint": "4d4f83dc01731d08",
+    "status": "failed",
+    "processed_at": "2026-10-01T18:14:47.406992"
+  },
+  "isFy83X5-qg": {
+    "title": "RRaenee | Yapay Zeka ile Yaptığı Videoları İzliyor",
+    "channel": "Craftest",
+    "detected_at": "2026-10-01T18:14:44.000066",
+    "fingerprint": "e7c0615ddebb70ce",
+    "status": "failed",
+    "processed_at": "2026-10-01T18:14:48.926051"
+  },
+  "H74iiWKfhFg": {
+    "title": "RRaenee | Çok korkunç oğlum",
+    "channel": "2kan",
+    "detected_at": "2026-10-01T18:14:44.588982",
+    "fingerprint": "eb7e585f879c2563",
+    "status": "failed",
+    "processed_at": "2026-10-01T18:14:50.228123"
   }
 }
