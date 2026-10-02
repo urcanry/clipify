@@ -711,5 +711,69 @@
     "fingerprint": "eb7e585f879c2563",
     "status": "failed",
     "processed_at": "2026-10-01T18:14:50.228123"
+  },
+  "lpXpXjh84Xo": {
+    "title": "RRaenee | Ayılarla Yaşayan Çiftin Rahatsız Edici Sonu | Tepki | Mehmet Ali Güldal",
+    "channel": "Craftest",
+    "detected_at": "2026-10-02T00:14:47.113355",
+    "fingerprint": "11d24c1ac87a5a10",
+    "status": "failed",
+    "processed_at": "2026-10-02T00:14:49.318244"
+  },
+  "Bj9a6jwwY5M": {
+    "title": "RRaenee | KONUŞMAYI ÖĞRENEN DÜNYANIN EN ÜNLÜ GORİLİ | Tepki | @bentropi ​",
+    "channel": "Craftest",
+    "detected_at": "2026-10-02T00:14:47.113434",
+    "fingerprint": "a450a3f214ac1498",
+    "status": "failed",
+    "processed_at": "2026-10-02T00:14:50.739353"
+  },
+  "nT2g-rvmjJM": {
+    "title": "Konuşmayı Öğrenen İlk Gorile Tepki! (@bentropi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-02T00:14:47.291126",
+    "fingerprint": "395eebb9c21056c1",
+    "status": "failed",
+    "processed_at": "2026-10-02T00:14:51.992011"
+  },
+  "mZy63tdjBe8": {
+    "title": "Acı Verici Bubi Tuzaklarına Tepki! (@ilgincdimi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-02T00:14:47.291201",
+    "fingerprint": "5b3b101636346a24",
+    "status": "failed",
+    "processed_at": "2026-10-02T00:14:53.244884"
+  },
+  "RFWWZHzeKHQ": {
+    "title": "RRaenee | Karga çok akıllı hayvan",
+    "channel": "2kan",
+    "detected_at": "2026-10-02T00:14:47.781706",
+    "fingerprint": "4dad96e2ef4a0c8a",
+    "status": "failed",
+    "processed_at": "2026-10-02T00:14:54.460237"
+  },
+  "y0Xdyhouotg": {
+    "title": "RRaenee | Ayılarla Yaşayan Çiftin Rahatsız Edici Sonu Tepki! @mehmetaliguldal",
+    "channel": "2kan",
+    "detected_at": "2026-10-02T00:14:47.781778",
+    "fingerprint": "4869b3e95581f4c6",
+    "status": "failed",
+    "processed_at": "2026-10-02T00:14:55.864863"
+  },
+  "okhqRlwu__o": {
+    "title": "RRaenee | Konuşmayı Öğrenen Dünyanın En Ünlü Gorili Tepki! @bentropi",
+    "channel": "2kan",
+    "detected_at": "2026-10-02T00:14:47.781834",
+    "fingerprint": "4c6b2d56edf3e86b",
+    "status": "failed",
+    "processed_at": "2026-10-02T00:14:57.505038"
+  },
+  "pXLbrZlyA1g": {
+    "title": "RRaenee | En Acı Verici Bubi Tuzakları Tepki! @ilgincdimi",
+    "channel": "2kan",
+    "detected_at": "2026-10-02T00:14:47.781868",
+    "fingerprint": "b560f8516942cb84",
+    "status": "duplicate_skipped",
+    "duplicate_of": "_GmUIKoxfEo"
   }
 }
