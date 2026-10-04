@@ -847,5 +847,29 @@
     "fingerprint": "8e5d2e0bfa63cf29",
     "status": "failed",
     "processed_at": "2026-10-03T21:58:49.205525"
+  },
+  "N3McZ7k73Qc": {
+    "title": "RRaenee Araba Anılarını Anlatıyor!",
+    "channel": "cFyt",
+    "detected_at": "2026-10-04T18:13:43.487678",
+    "fingerprint": "1fe6848f174bb7bb",
+    "status": "failed",
+    "processed_at": "2026-10-04T18:13:45.577630"
+  },
+  "Zg_tX6MOAjY": {
+    "title": "Motorcu Kazalarına Tepki #79 (@Zafer AKCAY) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-04T18:13:43.487715",
+    "fingerprint": "23ff0bc6751fcfa7",
+    "status": "duplicate_skipped",
+    "duplicate_of": "bxYMByLFVS0"
+  },
+  "C1UJ_kr13Pc": {
+    "title": "RRaenee | Motosiklet Kazalarına Tepki! #11 (ABS TARTIŞMASI!)  @ZaferAKCAY",
+    "channel": "2kan",
+    "detected_at": "2026-10-04T18:13:43.923617",
+    "fingerprint": "725fbfabf6b20a93",
+    "status": "failed",
+    "processed_at": "2026-10-04T18:13:47.155384"
   }
 }
