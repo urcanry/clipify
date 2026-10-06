@@ -935,5 +935,21 @@
     "fingerprint": "ed5e2578078447e8",
     "status": "duplicate_skipped",
     "duplicate_of": "wzB8l8JFnI0"
+  },
+  "sRLim4vQq6g": {
+    "title": "RRaenee | Sosa hamurda koysan güzel olur",
+    "channel": "2kan",
+    "detected_at": "2026-10-06T18:12:06.394943",
+    "fingerprint": "12804dd496e9051c",
+    "status": "failed",
+    "processed_at": "2026-10-06T18:12:07.672261"
+  },
+  "hb7GYnrVoUc": {
+    "title": "RRaenee | Önemli anlarda bizim ses tonu",
+    "channel": "2kan",
+    "detected_at": "2026-10-06T18:12:06.394985",
+    "fingerprint": "55c2675ccec8fa2d",
+    "status": "failed",
+    "processed_at": "2026-10-06T18:12:08.814777"
   }
 }
