@@ -911,5 +911,29 @@
     "fingerprint": "c4d680b020acc7bf",
     "status": "failed",
     "processed_at": "2026-10-05T18:14:49.519230"
+  },
+  "aK7QFFGKbzI": {
+    "title": "RRaenee | Televizyon Tarihinin En İğrenç Adamı | Dan Schneider | Tepki | @emreberkkanal",
+    "channel": "Craftest",
+    "detected_at": "2026-10-06T00:15:06.422281",
+    "fingerprint": "422169c96632c8be",
+    "status": "failed",
+    "processed_at": "2026-10-06T00:15:08.368877"
+  },
+  "wzB8l8JFnI0": {
+    "title": "RRaenee | Ariana Grande’ye Gerçekte Ne Oldu? | Tepki | @emreberkkanal",
+    "channel": "Craftest",
+    "detected_at": "2026-10-06T00:15:06.422352",
+    "fingerprint": "ed5e2578078447e8",
+    "status": "failed",
+    "processed_at": "2026-10-06T00:15:09.668812"
+  },
+  "V-2bBsnEGck": {
+    "title": "RRaenee | Ariana Grande'ye Gerçekte Ne Oldu? Tepki! @emreberkkanal",
+    "channel": "2kan",
+    "detected_at": "2026-10-06T00:15:06.936100",
+    "fingerprint": "ed5e2578078447e8",
+    "status": "duplicate_skipped",
+    "duplicate_of": "wzB8l8JFnI0"
   }
 }
