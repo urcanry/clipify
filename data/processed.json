@@ -967,5 +967,29 @@
     "fingerprint": "58f7a4cd63bb5232",
     "status": "failed",
     "processed_at": "2026-10-07T18:13:47.724975"
+  },
+  "7vQxSZzpB04": {
+    "title": "RRaenee | MATRIX de Tam Böyle Başlamıştı... | Tepki | @Baso ​",
+    "channel": "Craftest",
+    "detected_at": "2026-10-08T00:14:07.076268",
+    "fingerprint": "311048cd240ae05d",
+    "status": "failed",
+    "processed_at": "2026-10-08T00:14:09.427121"
+  },
+  "Nrkx07NF-9I": {
+    "title": "Matrix de Böyle Başlamıştı! Tepki! (@Baso) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-08T00:14:07.422279",
+    "fingerprint": "c05ee80896802589",
+    "status": "failed",
+    "processed_at": "2026-10-08T00:14:10.811810"
+  },
+  "NXCbwv7fN3Y": {
+    "title": "RRaenee | Matrix de Tam Böyle Başlamıştı (Yapay Zeka Tehlikesi) Tepki! @Baso",
+    "channel": "2kan",
+    "detected_at": "2026-10-08T00:14:07.793428",
+    "fingerprint": "f73bf1f5ddee7be5",
+    "status": "failed",
+    "processed_at": "2026-10-08T00:14:11.941371"
   }
 }
