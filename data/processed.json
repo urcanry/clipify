@@ -1007,5 +1007,45 @@
     "fingerprint": "9bbf0d12ea62bc73",
     "status": "failed",
     "processed_at": "2026-10-11T21:27:48.942028"
+  },
+  "Phm05BxCMk8": {
+    "title": "RRaenee | BAN TALEPLERİNİ İNCELİYOR!",
+    "channel": "Craftest",
+    "detected_at": "2026-10-13T13:30:46.177903",
+    "fingerprint": "eebcd22c12384ed6",
+    "status": "failed",
+    "processed_at": "2026-10-13T13:30:48.004624"
+  },
+  "KLSjUG-a43E": {
+    "title": "RRaenee | MOTOSİKLET AFFETMEZ | Motosiklet Kazaları (315) | İzliyor @Zafer AKCAY​",
+    "channel": "Craftest",
+    "detected_at": "2026-10-13T13:30:46.177993",
+    "fingerprint": "c8db9015bc12e4d4",
+    "status": "failed",
+    "processed_at": "2026-10-13T13:30:49.417069"
+  },
+  "Szn2PXQ5JnM": {
+    "title": "RRaenee | EVCİL HAYVANLARININ ESKİ VİDEOLARINI İZLİYOR!",
+    "channel": "Craftest",
+    "detected_at": "2026-10-13T13:30:46.178059",
+    "fingerprint": "2a6dd8e5e4f9052f",
+    "status": "failed",
+    "processed_at": "2026-10-13T13:30:50.544183"
+  },
+  "ZDaXd-vLv8c": {
+    "title": "Motorcu Kazalarına Tepki #81 (@Zafer AKCAY) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-13T13:30:46.337133",
+    "fingerprint": "23ff0bc6751fcfa7",
+    "status": "duplicate_skipped",
+    "duplicate_of": "bxYMByLFVS0"
+  },
+  "XFdGIgdIjSM": {
+    "title": "RRaenee | Motosiklet Kazalarına Tepki! #12 @ZaferAKCAY",
+    "channel": "2kan",
+    "detected_at": "2026-10-13T13:30:46.615266",
+    "fingerprint": "568438cc5fdda0e8",
+    "status": "duplicate_skipped",
+    "duplicate_of": "dvrEWW4vJGc"
   }
 }
