@@ -1047,5 +1047,77 @@
     "fingerprint": "568438cc5fdda0e8",
     "status": "duplicate_skipped",
     "duplicate_of": "dvrEWW4vJGc"
+  },
+  "drrq2ic-HQQ": {
+    "title": "RRaenee | İZLEYİCİLERDEN GELEN PARANORMAL HİKAYELER!",
+    "channel": "Craftest",
+    "detected_at": "2026-10-14T11:08:03.464104",
+    "fingerprint": "7ea369c8260ca91d",
+    "status": "failed",
+    "processed_at": "2026-10-14T11:08:05.337788"
+  },
+  "Tg454H-iHcM": {
+    "title": "RRaenee | Televizyonlardan Yasaklanan Güzellik Program | Tepki | @emreberkkanal",
+    "channel": "Craftest",
+    "detected_at": "2026-10-14T11:08:03.464187",
+    "fingerprint": "46aa17b0b84d4b8b",
+    "status": "failed",
+    "processed_at": "2026-10-14T11:08:06.552776"
+  },
+  "TdcpZmi6PKc": {
+    "title": "RRaenee | FELAKETE DÖNÜŞEN CADILAR BAYRAMI FACİASI | Tepki | @bentropi ​",
+    "channel": "Craftest",
+    "detected_at": "2026-10-14T11:08:03.464258",
+    "fingerprint": "b32df3244ff44559",
+    "status": "failed",
+    "processed_at": "2026-10-14T11:08:07.724200"
+  },
+  "2GF0-xrDf8A": {
+    "title": "RRaenee | Sonradan Gerçek Olduğu Ortaya Çıkan Efsaneler | Tepki | @ilgincdimi",
+    "channel": "Craftest",
+    "detected_at": "2026-10-14T11:08:03.464336",
+    "fingerprint": "9daafda1c26c7ca6",
+    "status": "failed",
+    "processed_at": "2026-10-14T11:08:09.096851"
+  },
+  "3aYHMdaKcYE": {
+    "title": "Felakete Dönüşen Cadılar Bayraımna Tepki! (@bentropi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-14T11:08:03.654670",
+    "fingerprint": "9899e20209b33942",
+    "status": "failed",
+    "processed_at": "2026-10-14T11:08:10.315993"
+  },
+  "Sq1iJOjFcg8": {
+    "title": "Sonradan Gerçek Olduğu Anlaşılan Efsanelere Tepki! (@ilgincdimi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-14T11:08:03.654756",
+    "fingerprint": "65cccc7c776f102e",
+    "status": "failed",
+    "processed_at": "2026-10-14T11:08:11.517340"
+  },
+  "UqZ1T0ye-ck": {
+    "title": "RRaenee İzleyicilerin Paranormal Anılarını İzliyor!",
+    "channel": "2kan",
+    "detected_at": "2026-10-14T11:08:04.059619",
+    "fingerprint": "b9d55b8f244a8945",
+    "status": "failed",
+    "processed_at": "2026-10-14T11:08:12.728228"
+  },
+  "HVGb-oygEI4": {
+    "title": "RRaenee | Felakete Dönüşen Cadılar Bayramı Faciası Tepki! @bentropi",
+    "channel": "2kan",
+    "detected_at": "2026-10-14T11:08:04.059695",
+    "fingerprint": "5e5af0b19fca00b5",
+    "status": "failed",
+    "processed_at": "2026-10-14T11:08:13.939328"
+  },
+  "tm1jh5yZnYE": {
+    "title": "RRaenee | Sonradan Gerçek Olduğu Ortaya Çıkan Efsaneler Tepki! @ilgincdimi",
+    "channel": "2kan",
+    "detected_at": "2026-10-14T11:08:04.059738",
+    "fingerprint": "9daafda1c26c7ca6",
+    "status": "duplicate_skipped",
+    "duplicate_of": "2GF0-xrDf8A"
   }
 }
