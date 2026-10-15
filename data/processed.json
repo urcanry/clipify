@@ -1119,5 +1119,13 @@
     "fingerprint": "9daafda1c26c7ca6",
     "status": "duplicate_skipped",
     "duplicate_of": "2GF0-xrDf8A"
+  },
+  "yjozJTOYrx8": {
+    "title": "RRaenee | Harbiden çok zordu",
+    "channel": "2kan",
+    "detected_at": "2026-10-15T16:16:24.358481",
+    "fingerprint": "b8fbbb60a231e8cc",
+    "status": "failed",
+    "processed_at": "2026-10-15T16:16:25.823895"
   }
 }
