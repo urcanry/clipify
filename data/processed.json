@@ -1151,5 +1151,21 @@
     "fingerprint": "22ece8d2daffdc09",
     "status": "failed",
     "processed_at": "2026-10-17T14:55:32.622465"
+  },
+  "aGOuM9Tqpkg": {
+    "title": "RRaenee | Nerde benim kraliçem",
+    "channel": "2kan",
+    "detected_at": "2026-10-17T20:04:56.707651",
+    "fingerprint": "28dc8de88e77efb2",
+    "status": "failed",
+    "processed_at": "2026-10-17T20:04:58.319006"
+  },
+  "JBbZYYtAl18": {
+    "title": "RRaenee | Gidip aynı şeyi yazdım",
+    "channel": "2kan",
+    "detected_at": "2026-10-17T20:04:56.707743",
+    "fingerprint": "a9c62cb46519a309",
+    "status": "failed",
+    "processed_at": "2026-10-17T20:04:59.733190"
   }
 }
