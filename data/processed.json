@@ -1183,5 +1183,21 @@
     "fingerprint": "0110f95c075b09e1",
     "status": "failed",
     "processed_at": "2026-10-18T10:21:47.918436"
+  },
+  "KweYaPL0k7w": {
+    "title": "RRaenee | KAFASIZ BECERİKSİZ | Motosiklet Kazaları (316) | İzliyor @Zafer AKCAY​",
+    "channel": "Craftest",
+    "detected_at": "2026-10-18T15:22:00.120484",
+    "fingerprint": "cded9836b1584be1",
+    "status": "failed",
+    "processed_at": "2026-10-18T15:22:02.337580"
+  },
+  "Q_2WZAYoSVk": {
+    "title": "Motorcu Kazalarına Tepki #82 (@Zafer AKCAY) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-18T15:22:00.338243",
+    "fingerprint": "23ff0bc6751fcfa7",
+    "status": "duplicate_skipped",
+    "duplicate_of": "bxYMByLFVS0"
   }
 }
