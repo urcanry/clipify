@@ -1199,5 +1199,101 @@
     "fingerprint": "23ff0bc6751fcfa7",
     "status": "duplicate_skipped",
     "duplicate_of": "bxYMByLFVS0"
+  },
+  "8TPf_c7IOIk": {
+    "title": "RRaenee | En Ürkütücü Gülümseme: 23 Yıl Sonra Yakalandı… | Tepki | Mehmet Ali Güldal",
+    "channel": "Craftest",
+    "detected_at": "2026-10-18T20:03:55.163145",
+    "fingerprint": "7efecd3ceb9c60af",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:03:56.810489"
+  },
+  "vUWY2ESiJoY": {
+    "title": "RRaenee | DÜNYANIN EN BÜYÜK ELMAS SOYGUNU | Tepki | @bentropi ​",
+    "channel": "Craftest",
+    "detected_at": "2026-10-18T20:03:55.163230",
+    "fingerprint": "fca0eab14f1f762b",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:03:58.306058"
+  },
+  "6nlcCWxLTO0": {
+    "title": "RRaenee | 33 Kişi Yola Çıktı, Sadece 11’i Döndü (Birbirlerini Avladılar) | Tepki | Mehmet Ali Güldal",
+    "channel": "Craftest",
+    "detected_at": "2026-10-18T20:03:55.163331",
+    "fingerprint": "feca266dc4b7adaf",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:03:59.607715"
+  },
+  "-hDd9FV0528": {
+    "title": "BU FOTOĞRAF KAÇ YILINDAN?! | RRaenee Quizei Oynuyor!",
+    "channel": "cFyt",
+    "detected_at": "2026-10-18T20:03:55.315469",
+    "fingerprint": "290a12a1bca4c5fe",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:04:00.938670"
+  },
+  "0BJn6Z8WGvw": {
+    "title": "23 Yıl Sonra Yakalanan Psikopat Polise Tepki! (@mehmetaliguldal) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-18T20:03:55.315552",
+    "fingerprint": "a8f69ffb92a9b8e8",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:04:03.028655"
+  },
+  "ZOrMhBBW54k": {
+    "title": "Dünyanın En Büyük Elmas Soygununa Tepki! (@bentropi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-18T20:03:55.315615",
+    "fingerprint": "e2ee4b78aea06dd4",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:04:04.311568"
+  },
+  "jaDCNeMSjkY": {
+    "title": "33 Kişi Yola Çıktı, Sadece 11’i Döndü Tepki! (@mehmetaliguldal) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-18T20:03:55.315684",
+    "fingerprint": "24366cbddcce3a56",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:04:05.594274"
+  },
+  "7igWSTMUlo8": {
+    "title": "ESTETİK DİYE BİR ŞEY KALMAMIŞ! | Türk Mimarisi - RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-18T20:03:55.315767",
+    "fingerprint": "465f0e30e6ef039e",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:04:06.901977"
+  },
+  "Gg7RB5JBFHw": {
+    "title": "RRaenee | En Ürkütücü Gülümseme: 23 Yıl Sonra Yakalandı Tepki! @mehmetaliguldal",
+    "channel": "2kan",
+    "detected_at": "2026-10-18T20:03:55.570526",
+    "fingerprint": "15cf6528968ceafb",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:04:08.052272"
+  },
+  "Hlxcm2Z_FmE": {
+    "title": "RRaenee | Dünyanın En Büyük Elmas Soygunu Tepki! @bentropi",
+    "channel": "2kan",
+    "detected_at": "2026-10-18T20:03:55.570596",
+    "fingerprint": "a9b1ad59ded9fb48",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:04:09.345877"
+  },
+  "pGcBT6BQhkM": {
+    "title": "RRaenee | 33 Kişi Yola Çıktı, Sadece 11’i Döndü Tepki! @mehmetaliguldal",
+    "channel": "2kan",
+    "detected_at": "2026-10-18T20:03:55.570640",
+    "fingerprint": "24366cbddcce3a56",
+    "status": "duplicate_skipped",
+    "duplicate_of": "jaDCNeMSjkY"
+  },
+  "KtA5c7x5cQM": {
+    "title": "RRaenee | Motosiklet Kazalarına Tepki! #13 (Mimari Yapı Tartışması!) @ZaferAKCAY",
+    "channel": "2kan",
+    "detected_at": "2026-10-18T20:03:55.570711",
+    "fingerprint": "8fbeec4e4d51d384",
+    "status": "failed",
+    "processed_at": "2026-10-18T20:04:10.842711"
   }
 }
