@@ -1343,5 +1343,29 @@
     "fingerprint": "693cc570e79cccf7",
     "status": "failed",
     "processed_at": "2026-10-25T10:40:19.730416"
+  },
+  "wzCCWbczgq0": {
+    "title": "RRaenee | KESKİN SİRKE | Motosiklet Kazaları (317) | İzliyor @Zafer AKCAY​",
+    "channel": "Craftest",
+    "detected_at": "2026-10-25T20:22:31.563503",
+    "fingerprint": "4060fde182ea7784",
+    "status": "failed",
+    "processed_at": "2026-10-25T20:22:33.661703"
+  },
+  "yS-t36-KmHg": {
+    "title": "Motorcu Kazalarına Tepki #83 (@Zafer AKCAY) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-25T20:22:31.784503",
+    "fingerprint": "23ff0bc6751fcfa7",
+    "status": "duplicate_skipped",
+    "duplicate_of": "bxYMByLFVS0"
+  },
+  "__dwAPjxGcQ": {
+    "title": "RRaenee | Motosiklet Kazalarına Tepki! #14 @ZaferAKCAY",
+    "channel": "2kan",
+    "detected_at": "2026-10-25T20:22:32.162897",
+    "fingerprint": "568438cc5fdda0e8",
+    "status": "duplicate_skipped",
+    "duplicate_of": "dvrEWW4vJGc"
   }
 }
