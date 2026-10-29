@@ -1367,5 +1367,53 @@
     "fingerprint": "568438cc5fdda0e8",
     "status": "duplicate_skipped",
     "duplicate_of": "dvrEWW4vJGc"
+  },
+  "oUqXEdVMs8I": {
+    "title": "RRaenee | ARABAYLA İNGİLTERE'DEN İSKOÇYA'YA VLOG! | Tepki | @Elraenn",
+    "channel": "Craftest",
+    "detected_at": "2026-10-29T22:25:56.649936",
+    "fingerprint": "a1da095160d1c2de",
+    "status": "failed",
+    "processed_at": "2026-10-29T22:25:58.540913"
+  },
+  "8wOer1khqOQ": {
+    "title": "hold on brother",
+    "channel": "cFyt",
+    "detected_at": "2026-10-29T22:25:56.805847",
+    "fingerprint": "5dc518bfd40c9152",
+    "status": "failed",
+    "processed_at": "2026-10-29T22:25:59.985374"
+  },
+  "yZQ0ejPhcuM": {
+    "title": "ne cayı ne cayı",
+    "channel": "cFyt",
+    "detected_at": "2026-10-29T22:25:56.805914",
+    "fingerprint": "5c519da9b3281106",
+    "status": "failed",
+    "processed_at": "2026-10-29T22:26:01.351202"
+  },
+  "fsMGvJzU5z0": {
+    "title": "aynı tepkiyi vermiş asbdjnoaksmdlasd",
+    "channel": "cFyt",
+    "detected_at": "2026-10-29T22:25:56.805965",
+    "fingerprint": "e9b1192b9d3bec5e",
+    "status": "failed",
+    "processed_at": "2026-10-29T22:26:02.794164"
+  },
+  "sa_zIevwHS4": {
+    "title": "İngiltere-İskoçya Vloguna Tepki! (@Elraenn) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-10-29T22:25:56.806030",
+    "fingerprint": "f7faae71eb12f401",
+    "status": "failed",
+    "processed_at": "2026-10-29T22:26:04.544889"
+  },
+  "o6hpwM1jLWc": {
+    "title": "RRaenee | Arabayla İngiltere'den İskoçya'ya Vlog Tepki! @Elraenn",
+    "channel": "2kan",
+    "detected_at": "2026-10-29T22:25:57.114772",
+    "fingerprint": "ee02686db25eb02b",
+    "status": "failed",
+    "processed_at": "2026-10-29T22:26:05.950318"
   }
 }
