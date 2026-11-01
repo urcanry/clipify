@@ -1415,5 +1415,77 @@
     "fingerprint": "ee02686db25eb02b",
     "status": "failed",
     "processed_at": "2026-10-29T22:26:05.950318"
+  },
+  "1HVGvMBvMp0": {
+    "title": "RRaenee | YouTube Genel Merkezine Saldıran YouTuber... | Tepki | Mehmet Ali Güldal",
+    "channel": "Craftest",
+    "detected_at": "2026-11-01T21:40:48.182696",
+    "fingerprint": "d9140217bf1d82c8",
+    "status": "failed",
+    "processed_at": "2026-11-01T21:40:50.110588"
+  },
+  "xlnHN7F818g": {
+    "title": "RRaenee | Yerin 1.000 Metre Altında Mahsur Kalmak (Türkiye’de) | Tepki | Mehmet Ali Güldal",
+    "channel": "Craftest",
+    "detected_at": "2026-11-01T21:40:48.182788",
+    "fingerprint": "3bbf32e83b1adc8b",
+    "status": "failed",
+    "processed_at": "2026-11-01T21:40:51.455437"
+  },
+  "0f8_C7vWSj8": {
+    "title": "RRaenee | En Acı Verici Set Kazası Ölümleri | Tepki | @ilgincdimi",
+    "channel": "Craftest",
+    "detected_at": "2026-11-01T21:40:48.182857",
+    "fingerprint": "521ca8129d5ff9da",
+    "status": "failed",
+    "processed_at": "2026-11-01T21:40:52.707551"
+  },
+  "O9Tz_Q2u_Ko": {
+    "title": "Youtube'a Saldıran Kadına Tepki! (@mehmetaliguldal) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-11-01T21:40:48.445966",
+    "fingerprint": "1f98b9b9af08c7f0",
+    "status": "failed",
+    "processed_at": "2026-11-01T21:40:54.060795"
+  },
+  "topy0NwtnfM": {
+    "title": "Yerin 1000 Metre Altında Mahsur Kalan Adama Tepki! (@mehmetaliguldal) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-11-01T21:40:48.446053",
+    "fingerprint": "7bf778c672349069",
+    "status": "failed",
+    "processed_at": "2026-11-01T21:40:55.424278"
+  },
+  "i4YCT4GBty8": {
+    "title": "En Acı Verici Set Kazalarına Tepki! (@ilgincdimi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-11-01T21:40:48.446115",
+    "fingerprint": "23e3b83d4d629a5c",
+    "status": "failed",
+    "processed_at": "2026-11-01T21:40:56.605410"
+  },
+  "UfqandmcLUQ": {
+    "title": "GTA6 Hikayesi İptal Edilmiş! TEPKİ! (@EnisKirazogluvideolar  | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-11-01T21:40:48.446180",
+    "fingerprint": "ce72ed3327aeb11a",
+    "status": "failed",
+    "processed_at": "2026-11-01T21:40:58.040489"
+  },
+  "Nt2r7tX7bLc": {
+    "title": "RRaenee | Yerin 1.000 Metre Altında Mahsur Kalmak (Türkiye'de) Tepki! @mehmetaliguldal",
+    "channel": "2kan",
+    "detected_at": "2026-11-01T21:40:48.701142",
+    "fingerprint": "ecc6528c2ed777c1",
+    "status": "failed",
+    "processed_at": "2026-11-01T21:40:59.316596"
+  },
+  "xB0PZv9j23k": {
+    "title": "RRaenee | En Acı Verici Set Kazası Ölümleri Tepki! @ilgincdimi",
+    "channel": "2kan",
+    "detected_at": "2026-11-01T21:40:48.701195",
+    "fingerprint": "521ca8129d5ff9da",
+    "status": "duplicate_skipped",
+    "duplicate_of": "0f8_C7vWSj8"
   }
 }
