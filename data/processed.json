@@ -1487,5 +1487,13 @@
     "fingerprint": "521ca8129d5ff9da",
     "status": "duplicate_skipped",
     "duplicate_of": "0f8_C7vWSj8"
+  },
+  "MEg0BW3wbsw": {
+    "title": "RRaenee | ESKİ C.H.E.S.S VE EİGHTBORN KLİPLERİNİ İZLİYOR",
+    "channel": "Craftest",
+    "detected_at": "2026-11-03T22:53:31.039533",
+    "fingerprint": "d94f2019cdc2d907",
+    "status": "failed",
+    "processed_at": "2026-11-03T22:53:32.787486"
   }
 }
