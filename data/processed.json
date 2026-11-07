@@ -1495,5 +1495,93 @@
     "fingerprint": "d94f2019cdc2d907",
     "status": "failed",
     "processed_at": "2026-11-03T22:53:32.787486"
+  },
+  "PbFYsETXVrU": {
+    "title": "RRaenee | Dünyanın En Uzak Adasını Keşfetmek | Tepki | ⁨@ruhicenetdocs⁩",
+    "channel": "Craftest",
+    "detected_at": "2026-11-07T21:26:04.045660",
+    "fingerprint": "0699e6ed73c84e70",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:06.160691"
+  },
+  "JHLC9YbNqQI": {
+    "title": "RRaenee | Ölüm Gemisinde 30 Gün | Tepki | ⁨@ruhicenetdocs⁩",
+    "channel": "Craftest",
+    "detected_at": "2026-11-07T21:26:04.045724",
+    "fingerprint": "464278c2fdb3f36a",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:07.490332"
+  },
+  "9U5Jf-0Tg3s": {
+    "title": "RRaenee | Tarihte İlginç Şekilde Ölen İnsanlar | Tepki | @ilgincdimi",
+    "channel": "Craftest",
+    "detected_at": "2026-11-07T21:26:04.045778",
+    "fingerprint": "0309c3a266d27777",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:08.709981"
+  },
+  "dnOURbvg5eU": {
+    "title": "BU ABUR CUBURLARI HATIRLAYANLAR BURADA MI? | Ekiple Goygoy - RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-11-07T21:26:04.369870",
+    "fingerprint": "62543dcc5159c91c",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:10.050493"
+  },
+  "EqAjP7NPflA": {
+    "title": "PARA SINIRI OLMASA NELER YAPARDIK? | Ekiple Goygoy - RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-11-07T21:26:04.369929",
+    "fingerprint": "292a575a43511b43",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:11.273449"
+  },
+  "E0vOisK3qVc": {
+    "title": "Dünyanın En Uzak Adasına Tepki! (@ruhicenetdocs) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-11-07T21:26:04.369981",
+    "fingerprint": "dbe317848b60e65a",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:12.535745"
+  },
+  "wYhlYmp-wJI": {
+    "title": "Ölüm Gemisinde 30 Güne Tepki! (@ruhicenetdocs) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-11-07T21:26:04.370027",
+    "fingerprint": "ae7d9e621224997a",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:13.897554"
+  },
+  "zezW91eLYPo": {
+    "title": "Tarihteki İlginç Ölümlere Tepki! (@ilgincdimi) | RRaenee",
+    "channel": "cFyt",
+    "detected_at": "2026-11-07T21:26:04.370073",
+    "fingerprint": "97a662711d083689",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:15.219752"
+  },
+  "95YEYdrw4Qc": {
+    "title": "RRaenee | Tarihte İlginç Şekilde Ölen İnsanlar Tepki! @ilgincdimi",
+    "channel": "2kan",
+    "detected_at": "2026-11-07T21:26:04.980760",
+    "fingerprint": "0309c3a266d27777",
+    "status": "duplicate_skipped",
+    "duplicate_of": "9U5Jf-0Tg3s"
+  },
+  "NGFrKoHPfpM": {
+    "title": "RRaenee | Yapay Zekalara Feign Oynatmak Tepki! @Hâlânizm",
+    "channel": "2kan",
+    "detected_at": "2026-11-07T21:26:04.980824",
+    "fingerprint": "88ebf8265fb758b5",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:16.404901"
+  },
+  "pVtkvmPvDQA": {
+    "title": "RRaenee | Biri gözlüğümü çalmış",
+    "channel": "2kan",
+    "detected_at": "2026-11-07T21:26:04.980863",
+    "fingerprint": "fcdbe03b0eedce48",
+    "status": "failed",
+    "processed_at": "2026-11-07T21:26:17.622851"
   }
 }
