@@ -1583,5 +1583,21 @@
     "fingerprint": "fcdbe03b0eedce48",
     "status": "failed",
     "processed_at": "2026-11-07T21:26:17.622851"
+  },
+  "ekL8AZx-oPE": {
+    "title": "RRaenee | Dünyanın En Uzak Adasını Keşfetmek Tepki! @ruhicenetdocs",
+    "channel": "2kan",
+    "detected_at": "2026-11-08T12:43:01.572566",
+    "fingerprint": "0699e6ed73c84e70",
+    "status": "duplicate_skipped",
+    "duplicate_of": "PbFYsETXVrU"
+  },
+  "cFhWWWRoPDs": {
+    "title": "RRaenee | Ölüm Gemisinde 30 Gün Tepki! @ruhicenetdocs",
+    "channel": "2kan",
+    "detected_at": "2026-11-08T12:43:01.572610",
+    "fingerprint": "464278c2fdb3f36a",
+    "status": "duplicate_skipped",
+    "duplicate_of": "JHLC9YbNqQI"
   }
 }
