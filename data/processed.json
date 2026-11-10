@@ -1599,5 +1599,21 @@
     "fingerprint": "464278c2fdb3f36a",
     "status": "duplicate_skipped",
     "duplicate_of": "JHLC9YbNqQI"
+  },
+  "5oQjejzpB8M": {
+    "title": "RRaenee | O canavar neydi lan öyle",
+    "channel": "2kan",
+    "detected_at": "2026-11-10T22:48:50.916161",
+    "fingerprint": "15c88bb30f401144",
+    "status": "failed",
+    "processed_at": "2026-11-10T22:48:52.533844"
+  },
+  "J5BG8g4ui_c": {
+    "title": "RRaenee | Beşiktaş'a laf mı soktu o",
+    "channel": "2kan",
+    "detected_at": "2026-11-10T22:48:50.916240",
+    "fingerprint": "d314f1271dcf1b8e",
+    "status": "failed",
+    "processed_at": "2026-11-10T22:48:53.746919"
   }
 }
