@@ -1615,5 +1615,21 @@
     "fingerprint": "d314f1271dcf1b8e",
     "status": "failed",
     "processed_at": "2026-11-10T22:48:53.746919"
+  },
+  "S9pMKk7-iiE": {
+    "title": "NASİP OLUR MU BE",
+    "channel": "Craftest",
+    "detected_at": "2026-11-12T00:01:20.510209",
+    "fingerprint": "cffb599217dc3db0",
+    "status": "failed",
+    "processed_at": "2026-11-12T00:01:24.334371"
+  },
+  "_wRLGA1XABo": {
+    "title": "RRaenee | Karga adresi bir daha unutmaz",
+    "channel": "2kan",
+    "detected_at": "2026-11-12T00:01:20.939636",
+    "fingerprint": "f6061aabeb9f4733",
+    "status": "failed",
+    "processed_at": "2026-11-12T00:01:25.637426"
   }
 }
